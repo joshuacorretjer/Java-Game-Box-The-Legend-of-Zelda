@@ -14,7 +14,6 @@ public class Sword extends BaseEntity{
 	public Sword(int x, int y, BufferedImage[] sword, Handler handler) {
 		super(x, y, Images.sword[0], handler);
 		// TODO Auto-generated constructor stub
-        bounds = new Rectangle((x * (ZeldaGameState.stageWidth/16)) + ZeldaGameState.xOffset,(y * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset,width,height);
         
 
     }
