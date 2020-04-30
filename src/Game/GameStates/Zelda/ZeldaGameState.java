@@ -7,6 +7,7 @@ import Game.Zelda.Entities.Dynamic.Link;
 import Game.Zelda.Entities.Statics.DungeonDoor;
 import Game.Zelda.Entities.Statics.SectionDoor;
 import Game.Zelda.Entities.Statics.SolidStaticEntities;
+import Game.Zelda.Entities.Statics.Sword;
 import Main.Handler;
 import Resources.Images;
 
@@ -23,10 +24,13 @@ public class ZeldaGameState extends State {
     public int cameraOffsetX,cameraOffsetY;
     //map is 16 by 7 squares, you start at x=7,y=7 starts counting at 0
     public int mapX,mapY,mapWidth,mapHeight;
+    
+    public int health = 3;
 
     public ArrayList<ArrayList<ArrayList<SolidStaticEntities>>> objects;
     public ArrayList<ArrayList<ArrayList<BaseMovingEntity>>> enemies;
     public Link link;
+    public Sword sword;
     public static boolean inCave = false;
     public ArrayList<SolidStaticEntities> caveObjects;
 
@@ -38,7 +42,7 @@ public class ZeldaGameState extends State {
         yOffset = handler.getHeight()/4;
         stageWidth = handler.getWidth()/3 + (handler.getWidth()/15);
         stageHeight = handler.getHeight()/2;
-        worldScale = 3;
+        worldScale = 2;
         mapX = 7;
         mapY = 7;
         mapWidth = 256;
@@ -70,7 +74,9 @@ public class ZeldaGameState extends State {
     public void tick() {
         link.tick();
         if (inCave){
-
+//        	if(sword.bounds.intersects(link.bounds)) {
+//        		link.move(null);
+//        	}
         }else {
             if (!link.movingMap) {
                 for (SolidStaticEntities entity : objects.get(mapX).get(mapY)) {
@@ -88,14 +94,24 @@ public class ZeldaGameState extends State {
 
     @Override
     public void render(Graphics g) {
+    	Graphics2D g2D = (Graphics2D) g;
         if (inCave){
             for (SolidStaticEntities entity : caveObjects) {
                 entity.render(g);
             }
             g.setColor(Color.WHITE);
-            g.setFont(new Font("TimesRoman", Font.BOLD, 32));
-            g.drawString("  IT ' S  DANGEROUS  TO  GO",(3 * (ZeldaGameState.stageWidth/16)) + ZeldaGameState.xOffset,(2 * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset+ ((16*worldScale)));
-            g.drawString("  ALONE !   TAKE  THIS",(4 * (ZeldaGameState.stageWidth/16)) + ZeldaGameState.xOffset,(4 * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset- ((16*worldScale)/2));
+            g.setFont(new Font("TimesRoman", Font.BOLD, 26));
+            //changed the size and position of the letters
+            g.drawString("  IT ' S  DANGEROUS  TO  GO",(3 * (ZeldaGameState.stageWidth/18)) + ZeldaGameState.xOffset,(2 * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset+ ((16*worldScale)));
+            g.drawString("  ALONE !   TAKE  THIS",(4 * (ZeldaGameState.stageWidth/18)) + ZeldaGameState.xOffset,(4 * (ZeldaGameState.stageHeight/10)) + ZeldaGameState.yOffset- ((16*worldScale)/2));
+            //*
+            //*;
+            g.drawImage(Images.oldman, (4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
+            g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset +30,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
+            g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+265 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
+//            g2D.drawImage(Images.sword, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+400 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
+            Sword sword = new Sword(mapX, mapY, Images.sword, handler);
+            sword.render(g);
             link.render(g);
         }else {
             g.drawImage(Images.zeldaMap, -cameraOffsetX + xOffset, -cameraOffsetY + yOffset, Images.zeldaMap.getWidth() * worldScale, Images.zeldaMap.getHeight() * worldScale, null);

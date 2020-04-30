@@ -57,16 +57,24 @@ public class Images {
     public SpriteSheet storySpriteSheet;
     public static BufferedImage zeldaTriforceLogo;
     public static BufferedImage zeldaMap;
+    public static BufferedImage zeldaNPC;//added picturre of npc.
+    
+    public SpriteSheet zeldaNPCSheet;//added sprite sheet for npc.
 
     public static ArrayList<BufferedImage> zeldaTiles;
     public static BufferedImage[] zeldaTitleFrames;
     public static BufferedImage[] zeldaStoryFrames;
+    public static BufferedImage oldman;
+    public static Image flame;
+    public static BufferedImage[] sword;
+    public static BufferedImage[] heart;
     public static BufferedImage zeldaWorldLayoutTileImage;
     public SpriteSheet zeldaWorldLayoutTileSpriteSheet;
     public static ArrayList<BufferedImage> zeldaWorldLayoutTiles;
 
     public static BufferedImage zeldaLinkImage;
     public SpriteSheet zeldaLinkSpriteSheet;
+    public SpriteSheet zeldaSwordSheet;
     public static BufferedImage[] zeldaLinkFrames;
 
     public static ArrayList<BufferedImage> forestTiles;
@@ -100,6 +108,8 @@ public class Images {
         zeldaTiles = new ArrayList<>();
         zeldaTitleFrames = new BufferedImage[6];
         zeldaStoryFrames = new BufferedImage[8];
+        sword = new BufferedImage[1];
+        heart = new BufferedImage[1];
         zeldaWorldLayoutTiles = new ArrayList<>();
 
         forestTiles = new ArrayList<>();
@@ -108,6 +118,8 @@ public class Images {
         mountainTiles = new ArrayList<>();
 
         zeldaLinkFrames = new BufferedImage[8];
+        
+//        oldman = new BufferedImage[1];
 
         bouncyEnemyFrames = new BufferedImage[2];
 
@@ -221,6 +233,8 @@ public class Images {
             zeldaMap = createImageTransparent(zeldaMap,"zelddaMap_0,128,0,green",new Color(0,128,0).getRGB());
             zeldaImageSheet = createImageTransparent(zeldaImageSheet,"tileSets_0,120,0,green",new Color(0,128,0).getRGB());
             zeldaSpriteSheet = new SpriteSheet(zeldaImageSheet);
+            zeldaNPC = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/npc.png"));
+            zeldaNPCSheet = new SpriteSheet(zeldaNPC);
 
             storyImageSheet = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/title.png"));
             storySpriteSheet = new SpriteSheet(storyImageSheet);
@@ -243,6 +257,7 @@ public class Images {
             zeldaLinkImage = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/link.png"));
             zeldaLinkImage = createImageTransparent(zeldaLinkImage,"link_0,128,0_green",new Color(0,128,0).getRGB());
             zeldaLinkSpriteSheet = new SpriteSheet(createImageTransparent(zeldaLinkImage,"link_116,116,116_gray",new Color(116,116,116).getRGB()));
+            
             zeldaLinkFrames[0] = zeldaLinkSpriteSheet.crop(1,11,16,16);
             zeldaLinkFrames[1] = zeldaLinkSpriteSheet.crop(18,11,16,16);
             zeldaLinkFrames[2] = zeldaLinkSpriteSheet.crop(35,11,16,16);
@@ -258,7 +273,18 @@ public class Images {
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"forest_brown4greeen",brown.getRGB(),new Color(0,168,0).getRGB()));
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"cave_brown4greeen",brown.getRGB(),new Color(124,8,0).getRGB()));
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"grave_brown4greeen",brown.getRGB(),new Color(252,252,252).getRGB()));
-
+            
+            
+//            sword = zeldaLinkSpriteSheet.crop(1,154,8,16);
+            
+            sword[0] = zeldaLinkSpriteSheet.crop(1,156,8,16);
+            
+            heart[0] = storySpriteSheet.crop(9,17,17,17);
+            
+            //NPC
+            oldman = zeldaNPCSheet.crop(1,11,16,16);
+            flame = zeldaNPCSheet.crop(52,11,16,16);
+            
 
             EnemyOverwoldImage = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/enemy3.png"));
             EnemyOverwoldImage = createImageTransparent(EnemyOverwoldImage,"enemies_overworld_116,116,116_green",new Color(116,116,116).getRGB());
@@ -540,7 +566,7 @@ public class Images {
         int width = image.getWidth();
         int height = image.getHeight();
         String path = Objects.requireNonNull(getClass().getClassLoader().getResource(".")).getPath();
-        String path2 = path.substring(0,path.indexOf("/out/"))+"/res/Edited/"+name+".png";
+        String path2 = path.substring(0,path.indexOf("/bin/"))+"/res/Edited/"+name+".png";
         File imagess = new File(path2.replaceAll("%20"," "));
         if (imagess.exists()){
             try {
