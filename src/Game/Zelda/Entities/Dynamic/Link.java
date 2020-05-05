@@ -1,9 +1,11 @@
 package Game.Zelda.Entities.Dynamic;
 
 import Game.GameStates.Zelda.ZeldaGameState;
+import Game.Zelda.Entities.BaseEntity;
 import Game.Zelda.Entities.Statics.DungeonDoor;
 import Game.Zelda.Entities.Statics.SectionDoor;
 import Game.Zelda.Entities.Statics.SolidStaticEntities;
+import Game.Zelda.Entities.Statics.Sword;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
@@ -36,6 +38,7 @@ public class Link extends BaseMovingEntity {
         animList[1] = sprite[5];
 
         animation = new Animation(animSpeed,animList);
+        
     }
 
     @Override
@@ -120,6 +123,13 @@ public class Link extends BaseMovingEntity {
                     direction = DOWN;
                     sprite = sprites[0];
                 }
+//                if(handler.getKeyManager().enter) {
+//                    BufferedImage[] atta = new BufferedImage[3];
+//                    atta[0] = Images.attack[0];
+//                    atta[1] = Images.attack[1];
+//                    atta[2] = Images.attack[2];
+//                    animation = new Animation(animSpeed,atta);
+//                }
                 animation.tick();
                 move(direction);
             } else if (handler.getKeyManager().left) {
@@ -182,8 +192,16 @@ public class Link extends BaseMovingEntity {
                     return;
                 }
             }
+            for(BaseEntity swoRD : handler.getZeldaGameState().interactable) {
+            	if(swoRD.bounds.intersects(bounds)) {
+            		ZeldaGameState.haveSword = true;
+            	}
+        	}
+//            if(handler.getZeldaGameState().sword.bounds.intersects(bounds)) {
+//            	
+//            }
         }
-        else {
+        else{
             for (SolidStaticEntities objects : handler.getZeldaGameState().objects.get(handler.getZeldaGameState().mapX).get(handler.getZeldaGameState().mapY)) {
                 if ((objects instanceof SectionDoor) && objects.bounds.intersects(bounds) && direction == ((SectionDoor) objects).direction) {
                     if (!(objects instanceof DungeonDoor)) {
@@ -231,6 +249,7 @@ public class Link extends BaseMovingEntity {
                     return;
                 }
             }
+
         }
         switch (direction) {
             case RIGHT:

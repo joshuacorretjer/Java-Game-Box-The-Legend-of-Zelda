@@ -67,6 +67,7 @@ public class Images {
     public static BufferedImage oldman;
     public static Image flame;
     public static BufferedImage[] sword;
+    public static BufferedImage[] attack;
     public static BufferedImage[] heart;
     public static BufferedImage zeldaWorldLayoutTileImage;
     public SpriteSheet zeldaWorldLayoutTileSpriteSheet;
@@ -110,6 +111,7 @@ public class Images {
         zeldaStoryFrames = new BufferedImage[8];
         sword = new BufferedImage[1];
         heart = new BufferedImage[1];
+        attack = new BufferedImage[9];
         zeldaWorldLayoutTiles = new ArrayList<>();
 
         forestTiles = new ArrayList<>();
@@ -275,9 +277,21 @@ public class Images {
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"grave_brown4greeen",brown.getRGB(),new Color(252,252,252).getRGB()));
             
             
-//            sword = zeldaLinkSpriteSheet.crop(1,154,8,16);
+            sword[0] = zeldaLinkSpriteSheet.crop(1,154,8,16);
             
-            sword[0] = zeldaLinkSpriteSheet.crop(1,156,8,16);
+//            sword[0] = zeldaLinkSpriteSheet.crop(1,156,8,16);
+            //down attack
+            attack[0] = zeldaLinkSpriteSheet.crop(52,47,16,19);
+            attack[1] = zeldaLinkSpriteSheet.crop(35,47,16,23);
+            attack[2] = zeldaLinkSpriteSheet.crop(18,47,16,27);
+            //side attack(default right)
+            attack[3] = zeldaLinkSpriteSheet.crop(70,77,19,16);
+            attack[4] = zeldaLinkSpriteSheet.crop(46,77,23,16);
+            attack[5] = zeldaLinkSpriteSheet.crop(18,77,27,16);
+            //up attack
+            attack[6] = zeldaLinkSpriteSheet.crop(52,106,16,19);
+            attack[7] = zeldaLinkSpriteSheet.crop(35,98,16,27);
+            attack[8] = zeldaLinkSpriteSheet.crop(18,97,16,28);
             
             heart[0] = storySpriteSheet.crop(9,17,17,17);
             
