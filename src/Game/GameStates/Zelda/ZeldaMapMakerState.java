@@ -55,6 +55,20 @@ public class ZeldaMapMakerState extends State {
 
     @Override
     public void tick() {
+    	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)){
+            if (linking){
+                handler.getDisplayScreen().confirm("Please click where the last tile will teleport too.");
+            }else {
+                switch (selector) {
+                    case 0:
+                    	counter=(selectedList.size()/2)+2;
+                        break;
+                    default:
+                    	counter=(selectedList.size()/2)+1;
+                        break;
+                }
+            }
+    	}
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)){
             handler.getDisplayScreen().confirm(
                     "Note: Some keys will require you to press them multiple times, not just why tbh.\n" +
