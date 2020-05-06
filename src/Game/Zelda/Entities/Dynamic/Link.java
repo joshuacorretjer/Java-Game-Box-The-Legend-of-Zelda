@@ -26,7 +26,11 @@ public class Link extends BaseMovingEntity {
     private final int animSpeed = 120;
     int newMapX=0,newMapY=0,xExtraCounter=0,yExtraCounter=0;
     public boolean movingMap = false;
+    public boolean attacki = false;
     Direction movingTo;
+    Animation RattackAni;
+    Animation DattackAni;
+    public int counter = 10*60;
 
 
     public Link(int x, int y, BufferedImage[] sprite, Handler handler) {
@@ -38,6 +42,20 @@ public class Link extends BaseMovingEntity {
         animList[1] = sprite[5];
 
         animation = new Animation(animSpeed,animList);
+        
+        BufferedImage[] rattac = new BufferedImage[3];
+        rattac[0] = Images.attack[3];
+        rattac[1] = Images.attack[4];
+        rattac[2] = Images.attack[5];
+        
+        RattackAni = new Animation(animSpeed,rattac);
+        
+        BufferedImage[] dattac = new BufferedImage[3];
+        dattac[0] = Images.attack[0];
+        dattac[1] = Images.attack[1];
+        dattac[2] = Images.attack[2];
+        
+        DattackAni = new Animation(animSpeed,dattac);
         
     }
 
@@ -123,13 +141,6 @@ public class Link extends BaseMovingEntity {
                     direction = DOWN;
                     sprite = sprites[0];
                 }
-//                if(handler.getKeyManager().enter) {
-//                    BufferedImage[] atta = new BufferedImage[3];
-//                    atta[0] = Images.attack[0];
-//                    atta[1] = Images.attack[1];
-//                    atta[2] = Images.attack[2];
-//                    animation = new Animation(animSpeed,atta);
-//                }
                 animation.tick();
                 move(direction);
             } else if (handler.getKeyManager().left) {
@@ -154,22 +165,76 @@ public class Link extends BaseMovingEntity {
                 }
                 animation.tick();
                 move(direction);
-            } else {
+//            }else if(handler.getKeyManager().enter) {
+//            	attacki=true;
+//                if(attacki==true) {
+//                	BufferedImage[] atta = new BufferedImage[3];
+//                	atta[0] = Images.attack[3];
+//                	atta[1] = Images.attack[4];
+//                	atta[2] = Images.attack[5];
+//                attackAni = new Animation(animSpeed,atta);
+//            }
+//                attackAni.tick();
+//                attacki=false;
+            }
+            
+            else {
                 moving = false;
             }
         }
+     if(handler.getKeyManager().enter) {
+    	attacki=true;
+        if(attacki==true && direction == Direction.RIGHT) {
+        	if(counter>0) {
+        		attacki=true;
+        		RattackAni.tick();
+        		counter--;
+        	}else{
+        		attacki=false;
+        		counter = 6*60;
+        	}
+        
+        }else if(attacki==true && direction == Direction.DOWN) {
+        	if(counter>0) {
+        		attacki=true;
+        		DattackAni.tick();
+        		counter--;
+        	}else{
+        		attacki=false;
+        		counter = 6*60;
+        	}
+        }
+     }else {
+    	 attacki=false;
+     }
+     
+     
     }
 
     @Override
     public void render(Graphics g) {
         if (moving) {
             g.drawImage(animation.getCurrentFrame(),x , y, width , height  , null);
-
         } else {
             if (movingMap){
                 g.drawImage(animation.getCurrentFrame(),x , y, width, height  , null);
             }
-            g.drawImage(sprite, x , y, width , height , null);
+            if(attacki==true && direction == Direction.RIGHT) {
+//            	if(counter>0) {
+//            		g.drawImage(attackAni.getCurrentFrame(),x , y, width , height  , null);
+//            		counter--;
+//            	}else{
+//            		attacki=false;
+//            		counter = 1*60;
+//            	}
+        		g.drawImage(RattackAni.getCurrentFrame(),x , y,50 , height , null);
+            }else if(attacki==true && direction == Direction.DOWN) {
+        		g.drawImage(DattackAni.getCurrentFrame(),x , y,50 , height , null);
+            
+            }else {
+            	g.drawImage(sprite, x , y, width , height , null);
+            }
+            
         }
     }
 

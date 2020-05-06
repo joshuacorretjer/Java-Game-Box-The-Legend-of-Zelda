@@ -72,7 +72,7 @@ public class ZeldaGameState extends State {
         addWorldObjects();
 
         link = new Link(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.zeldaLinkFrames,handler);
-        sword = new Sword(cameraOffsetX, cameraOffsetX, null, handler);
+        sword = new Sword(cameraOffsetX, cameraOffsetY, Images.sword, handler);
 
     }
 
@@ -82,10 +82,11 @@ public class ZeldaGameState extends State {
     public void tick() {
         link.tick();
         if (inCave){
-            for (BaseEntity swoRD : interactable) {
-            	if(haveSword==false) {
-            		swoRD.tick();
+        	if(link.getInteractBounds().intersects(sword.getInteractBounds()) && !(haveSword)) {
+        		haveSword=true;
             	}
+            if(!(haveSword)) {
+            	sword.tick();
             }
         }else {
             if (!link.movingMap) {
@@ -108,11 +109,8 @@ public class ZeldaGameState extends State {
             for (SolidStaticEntities entity : caveObjects) {
                 entity.render(g);
             }
-            for(BaseEntity swoRD : interactable) {
-            	if(haveSword==false) {
-            		swoRD.render(g);
-            	}
-            	
+            if(!(haveSword)) {
+            	sword.render(g);
             }
             g.setColor(Color.WHITE);
             g.setFont(new Font("TimesRoman", Font.BOLD, 26));
@@ -172,7 +170,7 @@ public class ZeldaGameState extends State {
             }
         }
         caveObjects.add(new DungeonDoor(7,9,16*worldScale*2,16*worldScale * 2,Direction.DOWN,"caveStartLeave",handler,(4 * (ZeldaGameState.stageWidth/16)) + ZeldaGameState.xOffset,(2 * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset));
-        interactable.add(new Sword(mapX,mapY, Images.sword, handler));
+//        interactable.add(new Sword(mapX,mapY, Images.sword, handler));
 
         //7,7
         ArrayList<SolidStaticEntities> solids = new ArrayList<>();
