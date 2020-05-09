@@ -72,7 +72,7 @@ public class ZeldaGameState extends State {
         addWorldObjects();
 
         link = new Link(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.zeldaLinkFrames,handler);
-        sword = new Sword(cameraOffsetX, cameraOffsetY, Images.sword, handler);
+        sword = new Sword((4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))+30, Images.sword, handler);
 
     }
 
@@ -119,9 +119,9 @@ public class ZeldaGameState extends State {
             g.drawString("  ALONE !   TAKE  THIS",(4 * (ZeldaGameState.stageWidth/18)) + ZeldaGameState.xOffset,(4 * (ZeldaGameState.stageHeight/10)) + ZeldaGameState.yOffset- ((16*worldScale)/2));
             //*
             //*;
-            g.drawImage(Images.oldman, (4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
-            g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset +30,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
-            g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+265 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
+            g.drawImage(Images.oldman, (4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-10 , 30, 30 , null);
+            g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset +30,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-10 , 30, 30 , null);
+            g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+265 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-10  , 30, 30 , null);
 //            g2D.drawImage(Images.sword, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+400 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
 //            Sword sword = new Sword(mapX, mapY, Images.sword, handler);
 //            sword.render(g);
@@ -142,6 +142,9 @@ public class ZeldaGameState extends State {
             g.fillRect(xOffset + stageWidth, 0, handler.getWidth(), handler.getHeight());
             g.fillRect(0, 0, handler.getWidth(), yOffset);
             g.fillRect(0, yOffset + stageHeight, handler.getWidth(), handler.getHeight());
+            for (int i = 0; i< health;i++) {//Draws the current remaining lives of Pac-Man
+                g.drawImage(Images.zeldaLinkFrames[0],((2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+400) +i*-54,(4 * (ZeldaGameState.stageHeight/12)), 30, 30 , null);
+                }
         }
 
     }

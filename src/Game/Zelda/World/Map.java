@@ -46,9 +46,9 @@ public class Map {
                 g2.drawImage(entity.sprite, entity.x , entity.y , entity.width , entity.height , null);
             }
         }
-        for (int i = 0; i< handler.getZeldaGameState().health;i++) {//Draws the current remaining lives of Pac-Man
-        g2.drawImage(Images.zeldaLinkFrames[0],(4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*ZeldaGameState.worldScale))  , 30, 30 , null);
-        }
+//        for (int i = 0; i< handler.getZeldaGameState().health;i++) {//Draws the current remaining lives of Pac-Man
+//        g2.drawImage(Images.zeldaLinkFrames[0],(4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*ZeldaGameState.worldScale))  , 30, 30 , null);
+//        }
     }
 
 

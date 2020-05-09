@@ -34,6 +34,6 @@ public class Sword extends BaseEntity{
 	@Override
     public void render(Graphics g) {
     	
-    	g.drawImage(sprite,x* (ZeldaGameState.stageWidth/16) + ZeldaGameState.xOffset +180,(2* (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset + (14*2)+60,width,height,null);
+    	g.drawImage(sprite,(4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*ZeldaGameState.worldScale))+30,width,height,null);
     }
 }

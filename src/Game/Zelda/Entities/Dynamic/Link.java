@@ -43,10 +43,14 @@ public class Link extends BaseMovingEntity {
 
         animation = new Animation(animSpeed,animList);
         
-        BufferedImage[] rattac = new BufferedImage[3];
+        BufferedImage[] rattac = new BufferedImage[6];
         rattac[0] = Images.attack[3];
         rattac[1] = Images.attack[4];
         rattac[2] = Images.attack[5];
+        rattac[3] = Images.attack[5];
+        rattac[4] = Images.attack[4];
+        rattac[5] = Images.attack[3];
+        
         
         RattackAni = new Animation(animSpeed,rattac);
         
@@ -213,6 +217,9 @@ public class Link extends BaseMovingEntity {
 
     @Override
     public void render(Graphics g) {
+//        for (int i = 0; i< health;i++) {//Draws the current remaining lives of Pac-Man
+//        g.drawImage(Images.zeldaLinkFrames[0],(2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+400 ,(4 * (ZeldaGameState.stageHeight/12)), 30, 30 , null);
+//        }
         if (moving) {
             g.drawImage(animation.getCurrentFrame(),x , y, width , height  , null);
         } else {
@@ -229,7 +236,7 @@ public class Link extends BaseMovingEntity {
 //            	}
         		g.drawImage(RattackAni.getCurrentFrame(),x , y,50 , height , null);
             }else if(attacki==true && direction == Direction.DOWN) {
-        		g.drawImage(DattackAni.getCurrentFrame(),x , y,50 , height , null);
+        		g.drawImage(DattackAni.getCurrentFrame(),x , y,width , height , null);
             
             }else {
             	g.drawImage(sprite, x , y, width , height , null);
