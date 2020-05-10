@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Created by AlexVR on 3/14/2020
@@ -55,6 +56,56 @@ public class ZeldaMapMakerState extends State {
 
     @Override
     public void tick() {
+    	
+    	  Random rand = new Random();
+    	//random tile
+    	        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
+    	        if(!linking) {
+    	        switch (selector) {
+    	case 0:
+    	counter=rand.nextInt(30);
+    	break;
+
+    	default:
+    	counter=rand.nextInt(42);
+    	break;
+    	}
+    	        }
+    	       
+    	       
+    	        }  
+    	//random tileset and select a tile      
+    	      if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)&& handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+    	        if(!linking) {
+    	   
+    	     
+    	     int randomtileset=rand.nextInt(5);
+    	     
+    	     
+    	      if (randomtileset==0)
+    	          selectedList = Images.zeldaTiles;
+    	      if(randomtileset==1)  
+    	          selectedList = Images.forestTiles;
+    	      if(randomtileset==2)
+    	          selectedList = Images.caveTiles;
+    	      if(randomtileset==3)
+    	          selectedList = Images.mountainTiles;
+    	      if(randomtileset==4)
+    	          selectedList = Images.graveTiles;
+    	     
+    	      switch (selector) {
+    	case 0:
+    	counter=rand.nextInt(30);
+    	break;
+
+    	default:
+    	counter=rand.nextInt(42);
+    	break;
+    	}
+    	        }
+    	        }
+    	
+    	
     	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)){
             if (linking){
                 handler.getDisplayScreen().confirm("Please click where the last tile will teleport too.");

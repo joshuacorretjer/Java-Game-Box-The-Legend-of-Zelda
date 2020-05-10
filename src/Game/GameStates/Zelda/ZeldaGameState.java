@@ -72,7 +72,7 @@ public class ZeldaGameState extends State {
         addWorldObjects();
 
         link = new Link(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.zeldaLinkFrames,handler);
-        sword = new Sword(x* (ZeldaGameState.stageWidth/16) + ZeldaGameState.xOffset +180, (2* (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset + (14*2)+60, Images.sword, handler);
+//        sword = new Sword(x* (ZeldaGameState.stageWidth/16) + ZeldaGameState.xOffset +180, (2* (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset + (14*2)+60, Images.sword, handler);
 
     }
 
