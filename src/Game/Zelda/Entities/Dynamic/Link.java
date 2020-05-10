@@ -30,7 +30,9 @@ public class Link extends BaseMovingEntity {
     Direction movingTo;
     Animation RattackAni;
     Animation DattackAni;
-    public int counter = 10*60;
+    public int counter = 5*60;
+    public int newWidth = 0;
+    public boolean exp = false;
 
 
     public Link(int x, int y, BufferedImage[] sprite, Handler handler) {
@@ -43,13 +45,16 @@ public class Link extends BaseMovingEntity {
 
         animation = new Animation(animSpeed,animList);
         
-        BufferedImage[] rattac = new BufferedImage[6];
+        BufferedImage[] rattac = new BufferedImage[3];
         rattac[0] = Images.attack[3];
         rattac[1] = Images.attack[4];
         rattac[2] = Images.attack[5];
-        rattac[3] = Images.attack[5];
-        rattac[4] = Images.attack[4];
-        rattac[5] = Images.attack[3];
+//        if(rattac == Images.attack[3]) {
+//        	newWidth = width+11;
+//        }
+//        rattac[3] = Images.attack[5];
+//        rattac[4] = Images.attack[4];
+//        rattac[5] = Images.attack[3];
         
         
         RattackAni = new Animation(animSpeed,rattac);
@@ -187,31 +192,32 @@ public class Link extends BaseMovingEntity {
             }
         }
      if(handler.getKeyManager().enter) {
-    	attacki=true;
-        if(attacki==true && direction == Direction.RIGHT) {
-        	if(counter>0) {
-        		attacki=true;
-        		RattackAni.tick();
-        		counter--;
-        	}else{
-        		attacki=false;
-        		counter = 6*60;
-        	}
-        
-        }else if(attacki==true && direction == Direction.DOWN) {
-        	if(counter>0) {
-        		attacki=true;
-        		DattackAni.tick();
-        		counter--;
-        	}else{
-        		attacki=false;
-        		counter = 6*60;
-        	}
-        }
-     }else {
-    	 attacki=false;
-     }
-     
+    	 attacki = true;
+    	 if(attacki && direction==Direction.RIGHT) {
+    		 RattackAni.tick();
+    	 }
+//    	 if(counter>0) {
+//    		 attacki=true;
+//    		 RattackAni.tick();
+//    		 counter--;
+//    	 }else {
+//    		 attacki=false;
+//    		 counter = 5*60;
+//    	 }
+//    	attacki=true;
+//     
+//     if(attacki) {
+//    	 if(counter>0)
+//    	 if(direction == Direction.RIGHT) {
+//    		 RattackAni.tick();
+//     		
+//    	 }
+//     }
+     		
+
+  }else {
+	  attacki=false;
+  }
      
     }
 
@@ -234,7 +240,7 @@ public class Link extends BaseMovingEntity {
 //            		attacki=false;
 //            		counter = 1*60;
 //            	}
-        		g.drawImage(RattackAni.getCurrentFrame(),x , y,50 , height , null);
+        		g.drawImage(RattackAni.getCurrentFrame(),x , y,width , height , null);
             }else if(attacki==true && direction == Direction.DOWN) {
         		g.drawImage(DattackAni.getCurrentFrame(),x , y,width , height , null);
             
