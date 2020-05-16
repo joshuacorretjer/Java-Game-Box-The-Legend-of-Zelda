@@ -14,6 +14,7 @@ import Main.Handler;
 import Resources.Images;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -81,6 +82,18 @@ public class ZeldaGameState extends State {
     @Override
     public void tick() {
         link.tick();
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)) {
+        	if(health<3) {
+        		health++;
+        	}
+        }
+        
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
+        	if(health>0) {
+        		health--;
+        	}
+        }
+        
         if (inCave){
         	if(link.getInteractBounds().intersects(sword.getInteractBounds()) && !(haveSword)) {
         		haveSword=true;
@@ -143,7 +156,7 @@ public class ZeldaGameState extends State {
             g.fillRect(0, 0, handler.getWidth(), yOffset);
             g.fillRect(0, yOffset + stageHeight, handler.getWidth(), handler.getHeight());
             for (int i = 0; i< health;i++) {//Draws the current remaining lives of Pac-Man
-                g.drawImage(Images.zeldaLinkFrames[0],((2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+400) +i*-54,(4 * (ZeldaGameState.stageHeight/12)), 30, 30 , null);
+                g.drawImage(Images.zeldaLinkFrames[0],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset+400) +i*54,(4 * (ZeldaGameState.stageHeight/12))+10, 30, 30 , null);
                 }
         }
 

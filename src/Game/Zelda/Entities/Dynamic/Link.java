@@ -28,10 +28,14 @@ public class Link extends BaseMovingEntity {
     public boolean movingMap = false;
     public boolean attacki = false;
     Direction movingTo;
-    Animation RattackAni;
-    Animation DattackAni;
-    public int counter = 5*60;
+    Animation UpAttackAnim;
+    Animation DownAttackAnim;
+    Animation LeftAttackAnim;
+    Animation RightAttackAnim;
+    public double counter = 0.5*60;
+    public double count=0.0;
     public int newWidth = 0;
+    public boolean flag = false;
     public boolean exp = false;
 
 
@@ -45,26 +49,43 @@ public class Link extends BaseMovingEntity {
 
         animation = new Animation(animSpeed,animList);
         
-        BufferedImage[] rattac = new BufferedImage[3];
-        rattac[0] = Images.attack[3];
-        rattac[1] = Images.attack[4];
-        rattac[2] = Images.attack[5];
-//        if(rattac == Images.attack[3]) {
-//        	newWidth = width+11;
-//        }
-//        rattac[3] = Images.attack[5];
-//        rattac[4] = Images.attack[4];
-//        rattac[5] = Images.attack[3];
+        BufferedImage[] upattack = new BufferedImage[5];
+        upattack[0] = Images.attack[0];
+        upattack[1] = Images.attack[1];
+        upattack[2] = Images.attack[2];
+        upattack[3] = Images.attack[1];
+        upattack[4] = Images.attack[0];
+        
+        UpAttackAnim = new Animation(70,upattack);
+        
+        BufferedImage[] downattack = new BufferedImage[5];
+        downattack[0] = Images.attack[3];
+        downattack[1] = Images.attack[4];
+        downattack[2] = Images.attack[5];
+        downattack[3] = Images.attack[4];
+        downattack[4] = Images.attack[3];
+        
+        DownAttackAnim = new Animation(70,downattack);
+        
+        BufferedImage[] leftattack = new BufferedImage[5];
+        leftattack[0] = Images.attack[6];
+        leftattack[1] = Images.attack[7];
+        leftattack[2] = Images.attack[8];
+        leftattack[3] = Images.attack[7];
+        leftattack[4] = Images.attack[6];
+        
+        LeftAttackAnim = new Animation(70,leftattack);
+        
+        BufferedImage[] rightattack = new BufferedImage[5];
+        rightattack[0] = Images.attack[6];
+        rightattack[1] = Images.attack[7];
+        rightattack[2] = Images.attack[8];
+        rightattack[3] = Images.attack[7];
+        rightattack[4] = Images.attack[6];
+        
+        RightAttackAnim = new Animation(70,rightattack);
         
         
-        RattackAni = new Animation(animSpeed,rattac);
-        
-        BufferedImage[] dattac = new BufferedImage[3];
-        dattac[0] = Images.attack[0];
-        dattac[1] = Images.attack[1];
-        dattac[2] = Images.attack[2];
-        
-        DattackAni = new Animation(animSpeed,dattac);
         
     }
 
@@ -174,17 +195,6 @@ public class Link extends BaseMovingEntity {
                 }
                 animation.tick();
                 move(direction);
-//            }else if(handler.getKeyManager().enter) {
-//            	attacki=true;
-//                if(attacki==true) {
-//                	BufferedImage[] atta = new BufferedImage[3];
-//                	atta[0] = Images.attack[3];
-//                	atta[1] = Images.attack[4];
-//                	atta[2] = Images.attack[5];
-//                attackAni = new Animation(animSpeed,atta);
-//            }
-//                attackAni.tick();
-//                attacki=false;
             }
             
             else {
@@ -193,31 +203,40 @@ public class Link extends BaseMovingEntity {
         }
      if(handler.getKeyManager().enter) {
     	 attacki = true;
-    	 if(attacki && direction==Direction.RIGHT) {
-    		 RattackAni.tick();
+     }
+     if(attacki) {
+    	 switch(direction) {
+    	 case UP:
+    		 UpAttackAnim.tick();
+        	 if(UpAttackAnim.end) {
+        		 attacki=false;
+        		 UpAttackAnim.reset();
+        		 }
+        	 break;
+    	 case DOWN:
+    		 DownAttackAnim.tick();
+        	 if(DownAttackAnim.end) {
+        		 attacki=false;
+        		 DownAttackAnim.reset();
+        		 }
+        	 break;
+    	 case LEFT:
+    		 LeftAttackAnim.tick();
+        	 if(LeftAttackAnim.end) {
+        		 attacki=false;
+        		 LeftAttackAnim.reset();
+        		 }
+        	 break;
+    	 case RIGHT:
+    		 RightAttackAnim.tick();
+        	 if(RightAttackAnim.end) {
+        		 attacki=false;
+        		 RightAttackAnim.reset();
+        		 }
+        	 break;
     	 }
-//    	 if(counter>0) {
-//    		 attacki=true;
-//    		 RattackAni.tick();
-//    		 counter--;
-//    	 }else {
-//    		 attacki=false;
-//    		 counter = 5*60;
-//    	 }
-//    	attacki=true;
-//     
-//     if(attacki) {
-//    	 if(counter>0)
-//    	 if(direction == Direction.RIGHT) {
-//    		 RattackAni.tick();
-//     		
-//    	 }
-//     }
-     		
-
-  }else {
-	  attacki=false;
-  }
+     }
+     
      
     }
 
@@ -232,18 +251,53 @@ public class Link extends BaseMovingEntity {
             if (movingMap){
                 g.drawImage(animation.getCurrentFrame(),x , y, width, height  , null);
             }
-            if(attacki==true && direction == Direction.RIGHT) {
-//            	if(counter>0) {
-//            		g.drawImage(attackAni.getCurrentFrame(),x , y, width , height  , null);
-//            		counter--;
-//            	}else{
-//            		attacki=false;
-//            		counter = 1*60;
-//            	}
-        		g.drawImage(RattackAni.getCurrentFrame(),x , y,width , height , null);
-            }else if(attacki==true && direction == Direction.DOWN) {
-        		g.drawImage(DattackAni.getCurrentFrame(),x , y,width , height , null);
-            
+            if(attacki==true) {
+            	if(direction == Direction.UP) {
+            		if(UpAttackAnim.getCurrentFrame()==Images.attack[0]){
+            		g.drawImage(UpAttackAnim.getCurrentFrame(), x, y, width, height+2, null);
+            		}
+            		if(UpAttackAnim.getCurrentFrame()==Images.attack[1]){
+            		g.drawImage(UpAttackAnim.getCurrentFrame(), x, y, width, height+10, null);
+            		}
+            		if(UpAttackAnim.getCurrentFrame()==Images.attack[2]){
+            		g.drawImage(UpAttackAnim.getCurrentFrame(), x, y, width, height+20, null);
+            		}
+            	}else if(direction == Direction.DOWN) {
+            		if(DownAttackAnim.getCurrentFrame()==Images.attack[3]){
+            		g.drawImage(DownAttackAnim.getCurrentFrame(), x, y, width, height+2, null);
+            		}
+            		if(DownAttackAnim.getCurrentFrame()==Images.attack[4]){
+            		g.drawImage(DownAttackAnim.getCurrentFrame(), x, y, width, height+10, null);
+            		}
+            		if(DownAttackAnim.getCurrentFrame()==Images.attack[5]){
+            		g.drawImage(DownAttackAnim.getCurrentFrame(), x, y, width, height+20, null);
+            		}
+//            		g.drawImage(DownAttackAnim.getCurrentFrame(),x , y,width , (int) (height+count) , null);
+            	}else if(direction == Direction.LEFT) {
+            		
+            		if(LeftAttackAnim.getCurrentFrame()==Images.attack[6]){
+            		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+2), height , null);
+            		}
+            		if(LeftAttackAnim.getCurrentFrame()==Images.attack[7]){
+            		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+10), height , null);
+            		}
+            		if(LeftAttackAnim.getCurrentFrame()==Images.attack[8]){
+            		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+20), height , null);
+            		}
+//            		g.drawImage(LeftAttackAnim.getCurrentFrame(),x , y,width, height , null);
+            	}else if(direction == Direction.RIGHT) {
+            		if(RightAttackAnim.getCurrentFrame()==Images.attack[6]){
+            		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+2, height, null);
+            		}
+            		if(RightAttackAnim.getCurrentFrame()==Images.attack[7]){
+            		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+10, height, null);
+            		}
+            		if(RightAttackAnim.getCurrentFrame()==Images.attack[8]){
+            		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+20, height, null);
+            		}
+//            		g.drawImage(RightAttackAnim.getCurrentFrame(),x , y,(int) (width+count) , height , null);
+            	}
+        		
             }else {
             	g.drawImage(sprite, x , y, width , height , null);
             }
