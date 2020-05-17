@@ -1,0 +1,2 @@
+List of linked teleports
+Teleporter at [18, 12] linked to [31, 8]
