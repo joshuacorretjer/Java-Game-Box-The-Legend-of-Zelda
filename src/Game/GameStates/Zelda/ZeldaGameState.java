@@ -1,14 +1,17 @@
 package Game.GameStates.Zelda;
 
 import Game.GameStates.State;
+
 import Game.Zelda.Entities.Dynamic.BaseMovingEntity;
 import Game.Zelda.Entities.Dynamic.Direction;
+import Game.Zelda.Entities.Dynamic.Enemy;
 import Game.Zelda.Entities.Dynamic.Link;
 import Game.Zelda.Entities.Statics.DungeonDoor;
 import Game.Zelda.Entities.Statics.SectionDoor;
 import Game.Zelda.Entities.Statics.SolidStaticEntities;
 import Main.Handler;
 import Resources.Images;
+import Resources.MusicHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,12 +30,14 @@ public class ZeldaGameState extends State {
     public ArrayList<ArrayList<ArrayList<SolidStaticEntities>>> objects;
     public ArrayList<ArrayList<ArrayList<BaseMovingEntity>>> enemies;
     public Link link;
+    public Enemy enemy;
     public static boolean inCave = false;
     public ArrayList<SolidStaticEntities> caveObjects;
 
 
 
     public ZeldaGameState(Handler handler) {
+    	
         super(handler);
         xOffset = handler.getWidth()/4;
         yOffset = handler.getHeight()/4;
@@ -40,7 +45,7 @@ public class ZeldaGameState extends State {
         stageHeight = handler.getHeight()/2;
         worldScale = 2;
         mapX = 7;
-        mapY = 7;
+        mapY =7;
         mapWidth = 256;
         mapHeight = 176;
         cameraOffsetX =  ((mapWidth*mapX) + mapX + 1)*worldScale;
@@ -60,7 +65,7 @@ public class ZeldaGameState extends State {
         addWorldObjects();
 
         link = new Link(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.zeldaLinkFrames,handler);
-
+       enemy= new Enemy(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.bouncyEnemyFrames,handler);
 
     }
 
@@ -69,6 +74,7 @@ public class ZeldaGameState extends State {
     @Override
     public void tick() {
         link.tick();
+        
         if (inCave){
 
         }else {
@@ -88,6 +94,8 @@ public class ZeldaGameState extends State {
 
     @Override
     public void render(Graphics g) {
+    	
+    	
         if (inCave){
             for (SolidStaticEntities entity : caveObjects) {
                 entity.render(g);
@@ -98,7 +106,7 @@ public class ZeldaGameState extends State {
             g.drawString("  ALONE !   TAKE  THIS",(4 * (ZeldaGameState.stageWidth/16)) + ZeldaGameState.xOffset,(4 * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset- ((16*worldScale)/2));
             link.render(g);
         }else {
-            g.drawImage(Images.zeldaMap, -cameraOffsetX + xOffset, -cameraOffsetY + yOffset, Images.zeldaMap.getWidth() * worldScale, Images.zeldaMap.getHeight() * worldScale, null);
+            g.drawImage(Images.zeldaMap, -cameraOffsetX + xOffset , -cameraOffsetY + yOffset, Images.zeldaMap.getWidth() * worldScale, Images.zeldaMap.getHeight() * worldScale, null);
             if (!link.movingMap) {
                 for (SolidStaticEntities entity : objects.get(mapX).get(mapY)) {
                     entity.render(g);
@@ -107,14 +115,17 @@ public class ZeldaGameState extends State {
                     entity.render(g);
                 }
             }
+            enemy.render(g);
             link.render(g);
+          
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, xOffset, handler.getHeight());
             g.fillRect(xOffset + stageWidth, 0, handler.getWidth(), handler.getHeight());
             g.fillRect(0, 0, handler.getWidth(), yOffset);
             g.fillRect(0, yOffset + stageHeight, handler.getWidth(), handler.getHeight());
         }
-
+       
+       
     }
 
     private void addWorldObjects() {
@@ -183,6 +194,7 @@ public class ZeldaGameState extends State {
         solids.add(new SolidStaticEntities(9,2,Images.forestTiles.get(5),handler));
         solids.add(new SolidStaticEntities(9,1,Images.forestTiles.get(5),handler));
         solids.add(new SolidStaticEntities(9,0,Images.forestTiles.get(5),handler));
+        monster.add(new Enemy(8, 4,Images.bouncyEnemyFrames, handler));
         objects.get(7).set(7,solids);
 
         //6,7
