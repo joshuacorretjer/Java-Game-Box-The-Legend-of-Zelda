@@ -110,7 +110,7 @@ public class Images {
         zeldaTitleFrames = new BufferedImage[6];
         zeldaStoryFrames = new BufferedImage[8];
         sword = new BufferedImage[1];
-        heart = new BufferedImage[1];
+        heart = new BufferedImage[2];
         attack = new BufferedImage[15];
         zeldaWorldLayoutTiles = new ArrayList<>();
 
@@ -300,7 +300,8 @@ public class Images {
 
             
             //hearts
-            heart[0] = storySpriteSheet.crop(9,17,17,17);
+            heart[0] = storySpriteSheet.crop(330,362,4,8);
+            heart[1] = flipHorizontal(heart[0]);
             
             //NPC
             oldman = zeldaNPCSheet.crop(1,11,16,16);

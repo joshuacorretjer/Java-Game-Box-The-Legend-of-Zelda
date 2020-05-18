@@ -83,14 +83,14 @@ public class ZeldaGameState extends State {
     public void tick() {
         link.tick();
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)) {
-        	if(health<3) {
-        		health++;
+        	if(link.health<6) {
+        		link.health++;
         	}
         }
         
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
-        	if(health>0) {
-        		health--;
+        	if(link.health>0) {
+        		link.health--;
         	}
         }
         
@@ -155,8 +155,13 @@ public class ZeldaGameState extends State {
             g.fillRect(xOffset + stageWidth, 0, handler.getWidth(), handler.getHeight());
             g.fillRect(0, 0, handler.getWidth(), yOffset);
             g.fillRect(0, yOffset + stageHeight, handler.getWidth(), handler.getHeight());
-            for (int i = 0; i< health;i++) {//Draws the current remaining lives of Pac-Man
-                g.drawImage(Images.zeldaLinkFrames[0],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset+400) +i*54,(4 * (ZeldaGameState.stageHeight/12))+10, 30, 30 , null);
+            for (int i = 0; i< link.health;i++) {//Draws the current remaining lives of Pac-Man
+                if(i%2==0) {
+                	g.drawImage(Images.heart[0],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset-5) +i*10,(4 * (ZeldaGameState.stageHeight/12))+10, 9, 16 , null);
+                }else {
+                	g.drawImage(Images.heart[1],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset-5) +i*10,(4 * (ZeldaGameState.stageHeight/12))+10, 9, 16 , null);
+                }
+                	
                 }
         }
 
