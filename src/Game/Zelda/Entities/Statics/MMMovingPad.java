@@ -30,13 +30,9 @@ public class MMMovingPad extends MMBaseEntity {
 //            ((ZeldaMMGameState)handler.getState()).map.link.x = linkedX;
 //            ((ZeldaMMGameState)handler.getState()).map.link.y = linkedY;
         	mov=true;
-        	if(sprite == Images.movingTiles.get(0) && mov) {
-        		if(((ZeldaMMGameState)handler.getState()).map.link.interactBounds.intersects(bounds)) {
-          ((ZeldaMMGameState)handler.getState()).map.link.x++;
-        	}else {
-        		mov = false;
-        	}
-        	}
+        }
+        if (mov) {
+        	recursiveMove(((ZeldaMMGameState)handler.getState()).map.link.x,((ZeldaMMGameState)handler.getState()).map.link.y);
         	
             return;
         }
@@ -44,7 +40,11 @@ public class MMMovingPad extends MMBaseEntity {
     }
     
     public void recursiveMove(int x, int y) {
-    	
+    	if(((ZeldaMMGameState)handler.getState()).map.link.interactBounds.intersects(bounds) && sprite==Images.movingTiles.get(0)) {
+    		recursiveMove(x+(width+10),y);
+    	}else {
+    		mov=false;
+    	}
     }
 
     @Override
