@@ -672,16 +672,16 @@ public class MapBuilder {
 					mapInCreation.addBlock(ghost1);
 					
 				}else if(currentPixel == move) {
-					MMMovingPad ghost = new MMMovingPad(xPos, yPos, Images.movingTiles.get(0), handler);
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(0), handler);
 					mapInCreation.addBlock(ghost);
 				}else if(currentPixel == move1) {
-					MMMovingPad ghost = new MMMovingPad(xPos, yPos, Images.movingTiles.get(1), handler);
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(1), handler);
 					mapInCreation.addBlock(ghost);
 				}else if(currentPixel == move2) {
-					MMMovingPad ghost = new MMMovingPad(xPos, yPos, Images.movingTiles.get(2), handler);
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(2), handler);
 					mapInCreation.addBlock(ghost);
 				}else if(currentPixel == move3) {
-					MMMovingPad ghost = new MMMovingPad(xPos, yPos, Images.movingTiles.get(3), handler);
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(3), handler);
 					mapInCreation.addBlock(ghost);
 				}
 
