@@ -29,7 +29,8 @@ public class ZeldaMMGameState extends State {
     }
 
     @Override
-    public void tick() {
+    public void tick() 
+    { 
         for (MMBaseMovingEntity entity: map.getEnemiesOnMap()){
             entity.tick();
         }
@@ -41,7 +42,6 @@ public class ZeldaMMGameState extends State {
     @Override
     public void render(Graphics g) {
         map.drawMap(((Graphics2D)g));
-
 
     }
 

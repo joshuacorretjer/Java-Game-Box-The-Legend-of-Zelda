@@ -9,6 +9,7 @@ import Game.Zelda.Entities.Statics.SectionDoor;
 import Game.Zelda.Entities.Statics.SolidStaticEntities;
 import Main.Handler;
 import Resources.Images;
+import Resources.MusicHandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,14 +34,15 @@ public class ZeldaGameState extends State {
 
 
     public ZeldaGameState(Handler handler) {
+    	
         super(handler);
         xOffset = handler.getWidth()/4;
         yOffset = handler.getHeight()/4;
         stageWidth = handler.getWidth()/3 + (handler.getWidth()/15);
         stageHeight = handler.getHeight()/2;
-        worldScale = 3;
+        worldScale = 2;
         mapX = 7;
-        mapY = 7;
+        mapY =7;
         mapWidth = 256;
         mapHeight = 176;
         cameraOffsetX =  ((mapWidth*mapX) + mapX + 1)*worldScale;
@@ -69,6 +71,7 @@ public class ZeldaGameState extends State {
     @Override
     public void tick() {
         link.tick();
+        
         if (inCave){
 
         }else {
@@ -88,6 +91,8 @@ public class ZeldaGameState extends State {
 
     @Override
     public void render(Graphics g) {
+    	
+    	
         if (inCave){
             for (SolidStaticEntities entity : caveObjects) {
                 entity.render(g);
@@ -98,7 +103,7 @@ public class ZeldaGameState extends State {
             g.drawString("  ALONE !   TAKE  THIS",(4 * (ZeldaGameState.stageWidth/16)) + ZeldaGameState.xOffset,(4 * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset- ((16*worldScale)/2));
             link.render(g);
         }else {
-            g.drawImage(Images.zeldaMap, -cameraOffsetX + xOffset, -cameraOffsetY + yOffset, Images.zeldaMap.getWidth() * worldScale, Images.zeldaMap.getHeight() * worldScale, null);
+            g.drawImage(Images.zeldaMap, -cameraOffsetX + xOffset , -cameraOffsetY + yOffset, Images.zeldaMap.getWidth() * worldScale, Images.zeldaMap.getHeight() * worldScale, null);
             if (!link.movingMap) {
                 for (SolidStaticEntities entity : objects.get(mapX).get(mapY)) {
                     entity.render(g);
