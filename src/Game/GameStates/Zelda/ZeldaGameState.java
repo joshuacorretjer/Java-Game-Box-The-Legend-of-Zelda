@@ -1,8 +1,10 @@
 package Game.GameStates.Zelda;
 
 import Game.GameStates.State;
+
 import Game.Zelda.Entities.Dynamic.BaseMovingEntity;
 import Game.Zelda.Entities.Dynamic.Direction;
+import Game.Zelda.Entities.Dynamic.Enemy;
 import Game.Zelda.Entities.Dynamic.Link;
 import Game.Zelda.Entities.Statics.DungeonDoor;
 import Game.Zelda.Entities.Statics.SectionDoor;
@@ -28,6 +30,7 @@ public class ZeldaGameState extends State {
     public ArrayList<ArrayList<ArrayList<SolidStaticEntities>>> objects;
     public ArrayList<ArrayList<ArrayList<BaseMovingEntity>>> enemies;
     public Link link;
+    public Enemy enemy;
     public static boolean inCave = false;
     public ArrayList<SolidStaticEntities> caveObjects;
 
@@ -62,7 +65,7 @@ public class ZeldaGameState extends State {
         addWorldObjects();
 
         link = new Link(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.zeldaLinkFrames,handler);
-
+       enemy= new Enemy(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.bouncyEnemyFrames,handler);
 
     }
 
@@ -112,14 +115,17 @@ public class ZeldaGameState extends State {
                     entity.render(g);
                 }
             }
+            enemy.render(g);
             link.render(g);
+          
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, xOffset, handler.getHeight());
             g.fillRect(xOffset + stageWidth, 0, handler.getWidth(), handler.getHeight());
             g.fillRect(0, 0, handler.getWidth(), yOffset);
             g.fillRect(0, yOffset + stageHeight, handler.getWidth(), handler.getHeight());
         }
-
+       
+       
     }
 
     private void addWorldObjects() {
@@ -188,6 +194,7 @@ public class ZeldaGameState extends State {
         solids.add(new SolidStaticEntities(9,2,Images.forestTiles.get(5),handler));
         solids.add(new SolidStaticEntities(9,1,Images.forestTiles.get(5),handler));
         solids.add(new SolidStaticEntities(9,0,Images.forestTiles.get(5),handler));
+        monster.add(new Enemy(8, 4,Images.bouncyEnemyFrames, handler));
         objects.get(7).set(7,solids);
 
         //6,7
