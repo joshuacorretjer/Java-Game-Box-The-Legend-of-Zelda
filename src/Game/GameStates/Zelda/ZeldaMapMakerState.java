@@ -82,7 +82,7 @@ public class ZeldaMapMakerState extends State {
             }else {
 
                 selector++;
-                if (selector > 4) {
+                if (selector > 5) {
                     selector = 0;
                 }
                 counter = 0;
@@ -101,6 +101,9 @@ public class ZeldaMapMakerState extends State {
                         break;
                     case 4:
                         selectedList = Images.graveTiles;
+                        break;
+                    case 5:
+                        selectedList = Images.movingTiles;
                         break;
                 }
             }
@@ -282,6 +285,13 @@ public class ZeldaMapMakerState extends State {
                             counter++;
                         }
                         break;
+                    case 5:
+                        if (counter == 3) {
+                            counter = 0;
+                        } else {
+                            counter++;
+                        }
+                        break;
                     default:
                         if (counter == 41) {
                             counter = 0;
@@ -300,6 +310,13 @@ public class ZeldaMapMakerState extends State {
                     case 0:
                         if (counter == 0) {
                             counter = 29;
+                        } else {
+                            counter--;
+                        }
+                        break;
+                    case 5:
+                        if (counter == 0) {
+                            counter = 3;
                         } else {
                             counter--;
                         }

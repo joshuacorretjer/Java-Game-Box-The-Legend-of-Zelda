@@ -1,6 +1,9 @@
 package Resources;
 
 import javax.imageio.ImageIO;
+
+import Game.PacMan.World.MapBuilder;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -77,11 +80,15 @@ public class Images {
     public SpriteSheet zeldaLinkSpriteSheet;
     public SpriteSheet zeldaSwordSheet;
     public static BufferedImage[] zeldaLinkFrames;
+    public static BufferedImage arrowImage;
+    public SpriteSheet arrowSpriteSheet;
+    public static BufferedImage[] move;
 
     public static ArrayList<BufferedImage> forestTiles;
     public static ArrayList<BufferedImage> caveTiles;
     public static ArrayList<BufferedImage> mountainTiles;
     public static ArrayList<BufferedImage> graveTiles;
+    public static ArrayList<BufferedImage> movingTiles;
 
     public static BufferedImage EnemyOverwoldImage;
     public SpriteSheet EnemyOverwoldSpriteSheet;
@@ -118,6 +125,8 @@ public class Images {
         caveTiles = new ArrayList<>();
         graveTiles = new ArrayList<>();
         mountainTiles = new ArrayList<>();
+        movingTiles = new ArrayList<>();
+        move = new BufferedImage[4];
 
         zeldaLinkFrames = new BufferedImage[8];
         
@@ -524,6 +533,46 @@ public class Images {
             graveTiles.add(grave.crop(102,51,16,16));
             graveTiles.add(grave.crop(119,51,16,16));
             graveTiles.add(grave.crop(136,51,16,16));
+            
+            //moving tiles
+            arrowImage = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/movintiles.png"));
+            arrowSpriteSheet = new SpriteSheet(arrowImage);
+            
+//            //right
+//            movingTiles.add(arrowSpriteSheet.crop(0, 0, 74, 74));
+//            
+//            //down
+//            movingTiles.add(arrowSpriteSheet.crop(74, 0, 74, 74));
+//            
+//            //left
+//            movingTiles.add(arrowSpriteSheet.crop(145, 0, 74, 74));
+//            
+//            //up
+//            movingTiles.add(arrowSpriteSheet.crop(222, 0, 74, 74));
+            
+            //right
+            move[0] = arrowSpriteSheet.crop(0, 0, 74, 74);
+            
+            //down
+            move[1] = arrowSpriteSheet.crop(74, 0, 74, 74);
+            
+            //left
+            move[2] = arrowSpriteSheet.crop(145, 0, 74, 74);
+            
+            //up
+            move[3] = arrowSpriteSheet.crop(222, 0, 74, 74);
+            
+          //right
+          movingTiles.add(move[0]);
+          
+          //down
+          movingTiles.add(move[1]);
+          
+          //left
+          movingTiles.add(move[2]);
+          
+          //up
+          movingTiles.add(move[3]);
 
 
         }catch (IOException e) {

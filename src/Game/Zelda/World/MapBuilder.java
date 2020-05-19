@@ -2,6 +2,7 @@ package Game.Zelda.World;
 
 import Game.GameStates.Zelda.ZeldaMapMakerState;
 import Game.Zelda.Entities.Dynamic.MMLink;
+import Game.Zelda.Entities.Statics.MMMovingPad;
 import Game.Zelda.Entities.Statics.MMSolidStaticEntities;
 import Game.Zelda.Entities.Statics.MMTeleport;
 import Game.Zelda.Entities.Statics.MMWalkingSolidEntities;
@@ -28,7 +29,7 @@ public class MapBuilder {
 		}
 		name+=".txt";
 		String path = Objects.requireNonNull(MapBuilder.class.getClassLoader().getResource(".")).getPath();
-		String path2 = path.substring(0,path.indexOf("/out/"))+"/res/Edited/"+name;
+		String path2 = path.substring(0,path.indexOf("/bin/"))+"/res/Edited/"+name;
 		ArrayList<ArrayList<int[]>> linkedTeli = new ArrayList<>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader( new File(path2)));
@@ -669,6 +670,19 @@ public class MapBuilder {
 					mapInCreation.link = ghost;
 					MMWalkingSolidEntities ghost1 = new MMWalkingSolidEntities(xPos, yPos, Images.forestTiles.get(0), handler);
 					mapInCreation.addBlock(ghost1);
+					
+				}else if(currentPixel == move) {
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(0), handler);
+					mapInCreation.addBlock(ghost);
+				}else if(currentPixel == move1) {
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(1), handler);
+					mapInCreation.addBlock(ghost);
+				}else if(currentPixel == move2) {
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(2), handler);
+					mapInCreation.addBlock(ghost);
+				}else if(currentPixel == move3) {
+					MMMovingPad ghost = new MMMovingPad(xPos, yPos,pixelMultiplier,pixelMultiplier, Images.movingTiles.get(3), handler);
+					mapInCreation.addBlock(ghost);
 				}
 
 
@@ -683,7 +697,7 @@ public class MapBuilder {
 	public static BufferedImage arrayToRGBImage(ArrayList<ArrayList<BufferedImage>> info,String name,ArrayList<ArrayList<int[]>> teleportList){
 
 		String path = Objects.requireNonNull(MapBuilder.class.getClassLoader().getResource(".")).getPath();
-		String path2 = path.substring(0,path.indexOf("/out/"))+"/res/Edited/"+name+".png";
+		String path2 = path.substring(0,path.indexOf("/bin/"))+"/res/Edited/"+name+".png";
 		File imagess = new File(path2.replaceAll("%20"," "));
 		if (imagess.exists()){
 			try {
@@ -1093,6 +1107,15 @@ public class MapBuilder {
 					image.setRGB(x,y,grave41);
 				}else if (Images.zeldaLinkFrames[0].equals(info.get(x).get(y))){
 					image.setRGB(x,y,Link);
+					
+				}else if (Images.movingTiles.get(0).equals(info.get(x).get(y))) {
+					image.setRGB(x,y,move);
+				}else if (Images.movingTiles.get(1).equals(info.get(x).get(y))) {
+					image.setRGB(x,y,move1);
+				}else if (Images.movingTiles.get(2).equals(info.get(x).get(y))) {
+					image.setRGB(x,y,move2);
+				}else if (Images.movingTiles.get(3).equals(info.get(x).get(y))) {
+					image.setRGB(x,y,move3);
 				}
 
 
@@ -1101,8 +1124,8 @@ public class MapBuilder {
 
 		try {
 			path = Objects.requireNonNull(MapBuilder.class.getClassLoader().getResource(".")).getPath();
-			path2 = path.substring(0, path.indexOf("/out/")) + "/res/Edited/" + name + ".png";
-			String path3 = path.substring(0, path.indexOf("/out/")) + "/res/Edited/" + name + ".txt";
+			path2 = path.substring(0, path.indexOf("/bin/")) + "/res/Edited/" + name + ".png";
+			String path3 = path.substring(0, path.indexOf("/bin/")) + "/res/Edited/" + name + ".txt";
 			f = new File(path2.replaceAll("%20", " "));
 			System.out.println("File saved in: " + path2);
 			ImageIO.write(image, "png", f);
@@ -1368,6 +1391,12 @@ public class MapBuilder {
 	public static int grave39 = new Color(196, 196, 196).getRGB();
 	public static int grave40 = new Color(198, 198, 198).getRGB();
 	public static int grave41 = new Color(100,100 ,100).getRGB();
+	
+	//next 4 moving pads
+	public static int move = new Color(0, 0, 143).getRGB();//right
+	public static int move1 = new Color(0, 5, 143).getRGB();//down
+	public static int move2 = new Color(0, 10, 143).getRGB();//left
+	public static int move3 = new Color(0, 15,143).getRGB();//up
 
 
 }
