@@ -109,7 +109,7 @@ public void tick(){
 	  @Override
 	    public void render(Graphics g) {
 	     Bouncingenemy.tick();
-	            g.drawImage(Bouncingenemy.getCurrentFrame(),x , y, width , height  , null);
+	            g.drawImage(Bouncingenemy.getCurrentFrame(),handler.getZeldaGameState().xOffset+(handler.getZeldaGameState().stageWidth/2)-10 , handler.getZeldaGameState().yOffset + (handler.getZeldaGameState().stageHeight/2)+11, width , height  , null);
 	            
 	   
 	           

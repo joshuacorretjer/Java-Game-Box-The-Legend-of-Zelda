@@ -232,7 +232,9 @@ public class ZeldaMapMakerState extends State {
 				case 0:
 					counter=rand.nextInt(30);
 					break;
-
+				case 1:
+					counter=rand.nextInt(4);
+					break;
 				default:
 					counter=rand.nextInt(42);
 					break;
@@ -246,7 +248,7 @@ public class ZeldaMapMakerState extends State {
         	if(!linking) {
    
     	  
-    	  int randomtileset=rand.nextInt(5);
+    	  int randomtileset=rand.nextInt(6);
     	  
     	  
       if (randomtileset==0)
@@ -259,12 +261,16 @@ public class ZeldaMapMakerState extends State {
           selectedList = Images.mountainTiles;
       if(randomtileset==4)
           selectedList = Images.graveTiles;
+      if(randomtileset==5)
+          selectedList = Images.movingTiles;
       
       switch (selector) {
 		case 0:
 			counter=rand.nextInt(30);
 			break;
-
+		case 5:
+			counter=rand.nextInt(4);
+			break;
 		default:
 			counter=rand.nextInt(42);
 			break;

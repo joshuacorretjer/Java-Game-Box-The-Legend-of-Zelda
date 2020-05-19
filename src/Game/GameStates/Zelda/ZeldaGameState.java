@@ -78,8 +78,8 @@ public class ZeldaGameState extends State {
         addWorldObjects();
 
         link = new Link(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.zeldaLinkFrames,handler);
-
-       enemy= new Enemy(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.bouncyEnemyFrames,handler);
+        
+        enemy= new Enemy(xOffset+(stageWidth/2)-10,yOffset + (stageHeight/2)+11,Images.bouncyEnemyFrames,handler);
 
         sword = new Sword((4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))+30, Images.sword, handler);
 
@@ -148,9 +148,7 @@ public class ZeldaGameState extends State {
             g.drawImage(Images.oldman, (4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-10 , 30, 34 , null);
             g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset +30,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-6 , 30, 30 , null);
             g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+265 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-6  , 30, 30 , null);
-//            g2D.drawImage(Images.sword, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+400 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))  , 30, 30 , null);
-//            Sword sword = new Sword(mapX, mapY, Images.sword, handler);
-//            sword.render(g);
+
             link.render(g);
         }else {
             g.drawImage(Images.zeldaMap, -cameraOffsetX + xOffset , -cameraOffsetY + yOffset, Images.zeldaMap.getWidth() * worldScale, Images.zeldaMap.getHeight() * worldScale, null);
@@ -162,7 +160,12 @@ public class ZeldaGameState extends State {
                     entity.render(g);
                 }
             }
-            enemy.render(g);
+            for (BaseMovingEntity entity : enemies.get(mapX).get(mapY)) {
+                entity.tick();
+                if (!(entity.getInteractBounds().intersects(link.getInteractBounds()) && link.attackin)){
+                	enemy.render(g);
+                }
+            }
             link.render(g);
           
             g.setColor(Color.BLACK);
