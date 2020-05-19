@@ -244,7 +244,9 @@ public class Images {
             zeldaMap = createImageTransparent(zeldaMap,"zelddaMap_0,128,0,green",new Color(0,128,0).getRGB());
             zeldaImageSheet = createImageTransparent(zeldaImageSheet,"tileSets_0,120,0,green",new Color(0,128,0).getRGB());
             zeldaSpriteSheet = new SpriteSheet(zeldaImageSheet);
+            //NPC sheets
             zeldaNPC = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/npc.png"));
+            zeldaNPC = createImageTransparent(zeldaNPC,"zeldaNPC_116,116,116,green",new Color(116,116,116).getRGB());
             zeldaNPCSheet = new SpriteSheet(zeldaNPC);
 
             storyImageSheet = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/title.png"));
@@ -285,10 +287,9 @@ public class Images {
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"cave_brown4greeen",brown.getRGB(),new Color(124,8,0).getRGB()));
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"grave_brown4greeen",brown.getRGB(),new Color(252,252,252).getRGB()));
             
-            
+            //sword
             sword[0] = zeldaLinkSpriteSheet.crop(1,154,8,16);
             
-//            sword[0] = zeldaLinkSpriteSheet.crop(1,156,8,16);
             //up attack
             attack[0] = zeldaLinkSpriteSheet.crop(52,106,16,19);
             attack[1] = zeldaLinkSpriteSheet.crop(35,98,16,27);
@@ -537,42 +538,30 @@ public class Images {
             //moving tiles
             arrowImage = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/movintiles.png"));
             arrowSpriteSheet = new SpriteSheet(arrowImage);
-            
-//            //right
-//            movingTiles.add(arrowSpriteSheet.crop(0, 0, 74, 74));
-//            
-//            //down
-//            movingTiles.add(arrowSpriteSheet.crop(74, 0, 74, 74));
-//            
-//            //left
-//            movingTiles.add(arrowSpriteSheet.crop(145, 0, 74, 74));
-//            
-//            //up
-//            movingTiles.add(arrowSpriteSheet.crop(222, 0, 74, 74));
-            
-            //right
+
+            //rightTile
             move[0] = arrowSpriteSheet.crop(0, 0, 74, 74);
             
-            //down
+            //downTile
             move[1] = arrowSpriteSheet.crop(74, 0, 74, 74);
             
-            //left
+            //leftTile
             move[2] = arrowSpriteSheet.crop(145, 0, 74, 74);
             
-            //up
+            //upTile
             move[3] = arrowSpriteSheet.crop(222, 0, 74, 74);
             
-          //right
-          movingTiles.add(move[0]);
-          
-          //down
-          movingTiles.add(move[1]);
-          
-          //left
-          movingTiles.add(move[2]);
-          
-          //up
-          movingTiles.add(move[3]);
+            //rightTile in list
+            movingTiles.add(move[0]);
+            
+            //downTile in list
+            movingTiles.add(move[1]);
+            
+            //leftTile in list
+            movingTiles.add(move[2]);
+            
+            //upTile in list
+            movingTiles.add(move[3]);
 
 
         }catch (IOException e) {

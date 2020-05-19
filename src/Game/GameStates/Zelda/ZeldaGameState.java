@@ -31,18 +31,14 @@ public class ZeldaGameState extends State {
     public int cameraOffsetX,cameraOffsetY;
     //map is 16 by 7 squares, you start at x=7,y=7 starts counting at 0
     public int mapX,mapY,mapWidth,mapHeight;
-    public int health = 3;
 
     public ArrayList<ArrayList<ArrayList<SolidStaticEntities>>> objects;
     public ArrayList<ArrayList<ArrayList<BaseMovingEntity>>> enemies;
     public Link link;
-
-    public Enemy enemy;
-
-    public Sword sword;
-
+    public Enemy enemy;//enemy class
+    public Sword sword;//sword class
     public static boolean inCave = false;
-    public static boolean haveSword = false;
+    public static boolean haveSword = false;//boolean that tells if link has the sword or not.
     public ArrayList<SolidStaticEntities> caveObjects;
     public ArrayList<BaseEntity> interactable;
 
@@ -78,11 +74,7 @@ public class ZeldaGameState extends State {
         addWorldObjects();
 
         link = new Link(xOffset+(stageWidth/2),yOffset + (stageHeight/2),Images.zeldaLinkFrames,handler);
-        
-        enemy= new Enemy(xOffset+(stageWidth/2)-10,yOffset + (stageHeight/2)+11,Images.bouncyEnemyFrames,handler);
-
         sword = new Sword((4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))+30, Images.sword, handler);
-
 
     }
 
@@ -92,13 +84,13 @@ public class ZeldaGameState extends State {
     public void tick() {
         link.tick();
 
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)) {
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)) {//debug that adds health to link
         	if(link.health<6) {
         		link.health++;
         	}
         }
         
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_E)) {//debug that deletes health from link
         	if(link.health>0) {
         		link.health--;
         	}
@@ -121,6 +113,7 @@ public class ZeldaGameState extends State {
                     entity.tick();
                     if (entity.getInteractBounds().intersects(link.getInteractBounds())){
                         link.damage(1);
+
                     }
                 }
             }
@@ -145,6 +138,7 @@ public class ZeldaGameState extends State {
             g.drawString("  ALONE !   TAKE  THIS",(4 * (ZeldaGameState.stageWidth/18)) + ZeldaGameState.xOffset,(4 * (ZeldaGameState.stageHeight/10)) + ZeldaGameState.yOffset- ((16*worldScale)/2));
             //*
             //*;
+            //renders items inside of cave
             g.drawImage(Images.oldman, (4 * (ZeldaGameState.stageWidth/8)) + ZeldaGameState.xOffset-8 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-10 , 30, 34 , null);
             g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset +30,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-6 , 30, 30 , null);
             g2D.drawImage(Images.flame, (2 * (ZeldaGameState.stageWidth/10)) + ZeldaGameState.xOffset+265 ,(4 * (ZeldaGameState.stageHeight/12)) + ZeldaGameState.yOffset+ ((16*worldScale))-6  , 30, 30 , null);
@@ -161,9 +155,9 @@ public class ZeldaGameState extends State {
                 }
             }
             for (BaseMovingEntity entity : enemies.get(mapX).get(mapY)) {
-                entity.tick();
+
                 if (!(entity.getInteractBounds().intersects(link.getInteractBounds()) && link.attackin)){
-                	enemy.render(g);
+                	entity.render(g);
                 }
             }
             link.render(g);
@@ -173,15 +167,16 @@ public class ZeldaGameState extends State {
             g.fillRect(xOffset + stageWidth, 0, handler.getWidth(), handler.getHeight());
             g.fillRect(0, 0, handler.getWidth(), yOffset);
             g.fillRect(0, yOffset + stageHeight, handler.getWidth(), handler.getHeight());
-            for (int i = 0; i< link.health;i++) {//Draws the current remaining lives of Pac-Man
-                if(i%2==0) {
-                	g.drawImage(Images.heart[0],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset-5) +i*10,(4 * (ZeldaGameState.stageHeight/12))+10, 9, 16 , null);
-                }else {
-                	g.drawImage(Images.heart[1],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset-5) +i*10,(4 * (ZeldaGameState.stageHeight/12))+10, 9, 16 , null);
-                }
-                	
-                }
+
         }
+        for (int i = 0; i< link.health;i++) {
+            if(i%2==0) {
+            	g.drawImage(Images.heart[0],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset-5) +i*10,(4 * (ZeldaGameState.stageHeight/12))+10, 9, 16 , null);
+            }else {
+            	g.drawImage(Images.heart[1],((2 * (ZeldaGameState.stageWidth/200)) + ZeldaGameState.xOffset-5) +i*10,(4 * (ZeldaGameState.stageHeight/12))+10, 9, 16 , null);
+            }
+            	
+            }
        
        
     }
@@ -210,7 +205,6 @@ public class ZeldaGameState extends State {
             }
         }
         caveObjects.add(new DungeonDoor(7,9,16*worldScale*2,16*worldScale * 2,Direction.DOWN,"caveStartLeave",handler,(4 * (ZeldaGameState.stageWidth/16)) + ZeldaGameState.xOffset,(2 * (ZeldaGameState.stageHeight/11)) + ZeldaGameState.yOffset));
-//        interactable.add(new Sword(mapX,mapY, Images.sword, handler));
 
         //7,7
         ArrayList<SolidStaticEntities> solids = new ArrayList<>();
@@ -253,7 +247,7 @@ public class ZeldaGameState extends State {
         solids.add(new SolidStaticEntities(9,2,Images.forestTiles.get(5),handler));
         solids.add(new SolidStaticEntities(9,1,Images.forestTiles.get(5),handler));
         solids.add(new SolidStaticEntities(9,0,Images.forestTiles.get(5),handler));
-        monster.add(new Enemy(8, 4,Images.bouncyEnemyFrames, handler));
+        monster.add(new Enemy(20, 20,Images.bouncyEnemyFrames, handler));
         enemies.get(7).set(7,monster);
         objects.get(7).set(7,solids);
 

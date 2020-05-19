@@ -25,7 +25,7 @@ public class ZeldaIntroStates extends State {
     public void tick() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER)){
             handler.changeState(handler.getZeldaGameState());
-            super.handler.getMusicHandler().changeMusic("Ocarina.wav");
+            super.handler.getMusicHandler().changeMusic("lostwoods.wav");
         }
         if(stage == 0) {
             introAnimation.tick();

@@ -217,7 +217,7 @@ public class Link extends BaseMovingEntity {
      if(handler.getKeyManager().enter && handler.getZeldaGameState().haveSword) {
     	 attackin = true;
      }
-     if(attackin) {
+     if(attackin) {//link's attack animation
     	 switch(direction) {
     	 case UP:
     		 UpAttackAnim.tick();
@@ -330,11 +330,7 @@ public class Link extends BaseMovingEntity {
                     return;
                 }
             }
-            for(BaseEntity swoRD : handler.getZeldaGameState().interactable) {
-            	if(swoRD.bounds.intersects(bounds)) {
-            		ZeldaGameState.haveSword = true;
-            	}
-        	}
+
         }
         else{
             for (SolidStaticEntities objects : handler.getZeldaGameState().objects.get(handler.getZeldaGameState().mapX).get(handler.getZeldaGameState().mapY)) {

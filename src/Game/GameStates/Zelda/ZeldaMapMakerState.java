@@ -19,8 +19,8 @@ import java.util.Random;
 public class ZeldaMapMakerState extends State {
     ArrayList<ArrayList<BufferedImage>> grid;
 
-    int counter = 0; //mueve tile en tile
-    int selector = 0;//mueve de tileset en tileset 
+    int counter = 0;
+    int selector = 0;
     boolean showingTiles= false;
     ArrayList<BufferedImage> selectedList;
 
@@ -56,6 +56,72 @@ public class ZeldaMapMakerState extends State {
 
     @Override
     public void tick() {
+    	
+    	  Random rand = new Random();
+    	//random tile
+    	        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
+    	        if(!linking) {
+    	        switch (selector) {
+		    	case 0:
+		    		counter=rand.nextInt(30);
+		    		break;
+		    	case 5:
+		    		counter=rand.nextInt(4);
+		    		break;
+		    	default:
+		    		counter=rand.nextInt(42);
+		    		break;
+		    		}
+    	        }
+    	      }  
+    	//random tileset and select a tile      
+    	      if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)&& handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
+    	        if(!linking) {
+    	   
+    	     
+    	     int randomtileset=rand.nextInt(5);
+    	     
+    	     
+    	      if (randomtileset==0)
+    	          selectedList = Images.zeldaTiles;
+    	      if(randomtileset==1)  
+    	          selectedList = Images.forestTiles;
+    	      if(randomtileset==2)
+    	          selectedList = Images.caveTiles;
+    	      if(randomtileset==3)
+    	          selectedList = Images.mountainTiles;
+    	      if(randomtileset==4)
+    	          selectedList = Images.graveTiles;
+    	     
+    	      switch (selector) {
+		    	case 0:
+		    		counter=rand.nextInt(30);
+		    		break;
+		    	default:
+		    		counter=rand.nextInt(42);
+		    		break;
+		    	}
+    	        }
+    	        }
+    	
+    	
+    	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_B)){//selects the middle tile
+            if (linking){
+                handler.getDisplayScreen().confirm("Please click where the last tile will teleport too.");
+            }else {
+                switch (selector) {
+                    case 0:
+                    	counter=(selectedList.size()/2)+2;
+                        break;
+                    case 5:
+                    	counter=(selectedList.size()/2);
+                        break;
+                    default:
+                    	counter=(selectedList.size()/2)+1;
+                        break;
+                }
+            }
+    	}
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_H)){
             handler.getDisplayScreen().confirm(
                     "Note: Some keys will require you to press them multiple times, not just why tbh.\n" +
@@ -65,8 +131,6 @@ public class ZeldaMapMakerState extends State {
                             "T ==> Changes the tile set.\n" +
                             "S ==> Shows the list of tiles available and the one selected from the current tileSet.\n" +
                             "+ ==> Move to the next tile.\n" +
-                            "R==> Select a random tile from the list.\n" +
-                            "Shift + R==> ​selects a random tile set and tile from the tilesets available to be selected.\n" +
                             "- ==> Moves to the previous tile.\n" +
                             "ENTER ==> Finished the map and saves it to the the 'Edited' folder.\n" +
                             "LMB ==> Place the currently selected tile\n" +
@@ -103,8 +167,8 @@ public class ZeldaMapMakerState extends State {
                         selectedList = Images.graveTiles;
                         break;
                     case 5:
-                        selectedList = Images.movingTiles;
-                        break;
+                    	selectedList = Images.movingTiles;
+                    	break;
                 }
             }
         }
@@ -223,62 +287,7 @@ public class ZeldaMapMakerState extends State {
                 linking = false;
             }
         }
-        
-   	  Random rand = new Random();
-//random tile
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
-        	if(!linking) {
-        		switch (selector) {
-				case 0:
-					counter=rand.nextInt(30);
-					break;
-				case 1:
-					counter=rand.nextInt(4);
-					break;
-				default:
-					counter=rand.nextInt(42);
-					break;
-				}
-        	}
-        	
-        	
-        }  
-//random tileset and select a tile       
-      if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)&& handler.getKeyManager().keyJustPressed(KeyEvent.VK_SHIFT)) {
-        	if(!linking) {
-   
-    	  
-    	  int randomtileset=rand.nextInt(6);
-    	  
-    	  
-      if (randomtileset==0)
-          selectedList = Images.zeldaTiles;
-      if(randomtileset==1)   
-          selectedList = Images.forestTiles;
-      if(randomtileset==2)
-          selectedList = Images.caveTiles;
-      if(randomtileset==3)
-          selectedList = Images.mountainTiles;
-      if(randomtileset==4)
-          selectedList = Images.graveTiles;
-      if(randomtileset==5)
-          selectedList = Images.movingTiles;
-      
-      switch (selector) {
-		case 0:
-			counter=rand.nextInt(30);
-			break;
-		case 5:
-			counter=rand.nextInt(4);
-			break;
-		default:
-			counter=rand.nextInt(42);
-			break;
-		}
-        	}
-        }
-        	
-        	
+
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)){
             if (linking){
                 handler.getDisplayScreen().confirm("Please click where the last tile will teleport too.");
