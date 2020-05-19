@@ -1,6 +1,7 @@
 package Game.Zelda.Entities.Statics;
 
 import Game.GameStates.Zelda.ZeldaMMGameState;
+import Game.PacMan.World.MapBuilder;
 import Game.Zelda.Entities.MMBaseEntity;
 import Main.Handler;
 import Resources.Images;
@@ -19,9 +20,9 @@ public class MMMovingPad extends MMBaseEntity {
 
     public MMMovingPad(int x, int y, int width, int height, BufferedImage sprite, Handler handler) {
         super(x, y,sprite, handler);
-        this.width = width;
-        this.height = height;
-        bounds = new Rectangle(x ,y ,width,height);
+        this.width = MapBuilder.pixelMultiplier;
+        this.height = MapBuilder.pixelMultiplier;
+        bounds = new Rectangle(x ,y ,MapBuilder.pixelMultiplier,MapBuilder.pixelMultiplier);
 
     }
 
@@ -44,12 +45,12 @@ public class MMMovingPad extends MMBaseEntity {
     		recursiveMove(x+(width+10),y);
     	}else {
     		mov=false;
-    		((ZeldaMMGameState)handler.getState()).map.link.move();
+//    		((ZeldaMMGameState)handler.getState()).map.link.move();
     	}
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(sprite,x ,y,this.width,this.height,null);
+        g.drawImage(sprite,x ,y,MapBuilder.pixelMultiplier,MapBuilder.pixelMultiplier,null);
     }
 }

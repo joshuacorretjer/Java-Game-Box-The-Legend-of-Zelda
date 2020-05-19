@@ -1,6 +1,9 @@
 package Resources;
 
 import javax.imageio.ImageIO;
+
+import Game.PacMan.World.MapBuilder;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
