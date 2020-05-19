@@ -4,9 +4,14 @@ import static Game.Zelda.Entities.Dynamic.Direction.DOWN;
 import static Game.Zelda.Entities.Dynamic.Direction.UP;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import com.sun.xml.internal.ws.api.pipe.NextAction;
+
+import Game.Zelda.Entities.Statics.SectionDoor;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
@@ -20,48 +25,100 @@ public class Enemy extends BaseMovingEntity{
 		// TODO Auto-generated constructor stub
 		
 		Bouncingenemy= new Animation(120, Images.bouncyEnemyFrames);
+		//speed
+		//vidas//
+	}
+@Override
+public void tick(){ 
+ Random rand = new Random(); 
+ int ran= rand.nextInt(4);
+ 
 		
-		
-		
-		 Random rand = new Random(); 
-		 
-		 int mix=rand.nextInt(4);
-		 
-		 if(mix==0) {
-			 direction=Direction.RIGHT;
-		 }else if(mix==1) {
-			 direction=Direction.LEFT;
-		 }else if(mix==2) {
-			 direction=Direction.UP;
-		 }else if(mix==3) {
-			 direction=Direction.DOWN;
-		 }
-		
-		
-		  }
-	
+//Switch con el rand. Coge y en cada case pones como si fuese la foto que te //.    mande de link. Que tiene un if con dirección y así //
+ 
+ switch(ran) {
+ case 0:  
+	 if(direction != UP) {
+     BufferedImage[] animList = new BufferedImage[2];
+     animList[0] =sprites[0];
+     animList[1] = sprites[1];
+     animation = new Animation(120, animList);
+     direction = UP;
+     sprite = sprites[1];
+ }
+ animation.tick();
+ move(direction);
+	 
+ case 1:
+	  if (direction != DOWN) {
+          BufferedImage[] animList = new BufferedImage[2];
+          animList[0] = sprites[0];
+          animList[1] = sprites[1];
+          animation = new Animation(120, animList);
+          direction = DOWN;
+          sprite = sprites[1];
+      }
+      animation.tick();
+      move(direction);
+ case 2:
+	 if (direction != Direction.LEFT) {
+         BufferedImage[] animList = new BufferedImage[2];
+         animList[0] =sprites[0];
+         animList[1] = sprites[1];
+         animation = new Animation(120, animList);
+         direction = Direction.LEFT;
+         sprite = sprites[1];
+     }
+     animation.tick();
+     move(direction);
+ case 3:
+	 if (direction != Direction.RIGHT) {
+         BufferedImage[] animList = new BufferedImage[2];
+         animList[0] = (sprites[0]);
+         animList[1] = (sprites[1]);
+         animation = new Animation(120, animList);
+         direction = Direction.RIGHT;
+         sprite = sprites[1];
+     }
+     animation.tick();
+     move(direction);
+ 
+ 
+ 
+ }
+         switch (direction) {
+         case RIGHT:
+             x += speed;
+             animation.tick();
+             move(direction);
+             break;
+         case LEFT:
+             x -= speed;
+             animation.tick();
+             move(direction);
+             break;
+         case UP:
+             y -= speed;
+             animation.tick();
+             move(direction);
+             break;
+         case DOWN:
+             y += speed;
+             animation.tick();
+             move(direction);
+             break;}
+         
+         
+	}
 	
 	  @Override
 	    public void render(Graphics g) {
 	     Bouncingenemy.tick();
 	            g.drawImage(Bouncingenemy.getCurrentFrame(),x , y, width , height  , null);
 	            
-	            switch (direction) {
-	            case RIGHT:
-	                x += speed;
-	                break;
-	            case LEFT:
-	                x -= speed;
-	                break;
-	            case UP:
-	                y -= speed;
-	                break;
-	            case DOWN:
-	                y += speed;
-
-	                break;}
-	  
+	   
+	           
+	               
+	            }
 	  
 	  }
-
-}
