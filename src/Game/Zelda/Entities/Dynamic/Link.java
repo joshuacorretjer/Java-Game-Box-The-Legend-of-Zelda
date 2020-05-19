@@ -94,22 +94,22 @@ public class Link extends BaseMovingEntity {
         if (movingMap){
             switch (movingTo) {
             case RIGHT:
-            	if(xcounter>0) {
-                    handler.getZeldaGameState().cameraOffsetX+=4;
-                    newMapX+=4;
-                    xcounter--;
-                	}else {
-                		handler.getZeldaGameState().cameraOffsetX-=3;
-                        newMapX-=3;
-                		xcounter = 1*60;
-                	}
+              if(xcounter>0) {
+            	handler.getZeldaGameState().cameraOffsetX+=3;
+            	xcounter--;
+              }else {
+            	  handler.getZeldaGameState().cameraOffsetX-=2;
+            	  xcounter=1*60;
+              }
+              
+              newMapX+=3;
                 if (xExtraCounter>0){
-                    x+=2;
-                    xExtraCounter--;
+                    x+=6;
+                    xExtraCounter-=3;
                     animation.tick();
 
                 }else{
-                    x-=4;
+                    x-=3;
                 }
                 break;
             case LEFT:
