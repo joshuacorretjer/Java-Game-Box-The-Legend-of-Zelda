@@ -32,7 +32,7 @@ public class Link extends BaseMovingEntity {
     Animation DownAttackAnim;
     Animation LeftAttackAnim;
     Animation RightAttackAnim;
-    public double counter = 0.5*60;
+    public int counter = 1*60;
     public double count=0.0;
     public int newWidth = 0;
     public boolean flag = false;
@@ -93,40 +93,54 @@ public class Link extends BaseMovingEntity {
     public void tick() {
         if (movingMap){
             switch (movingTo) {
-                case RIGHT:
-//                	if(count>0) {
-//                        handler.getZeldaGameState().cameraOffsetX+=4;
-//                        count--;
-//                    	}else {
-//                    		handler.getZeldaGameState().cameraOffsetX-=3;
-//                    		count = 2;
-//                    	}
-                    handler.getZeldaGameState().cameraOffsetX++;
-                    newMapX++;
-                    if (xExtraCounter>0){
-                        x+=2;
-                        xExtraCounter--;
-                        animation.tick();
+            case RIGHT:
+            	if(counter>0) {
+                    handler.getZeldaGameState().cameraOffsetX+=4;
+                    newMapX+=4;
+                    counter--;
+                	}else {
+                		handler.getZeldaGameState().cameraOffsetX-=3;
+                        newMapX-=3;
+                		counter = 1*60;
+                	}
+                if (xExtraCounter>0){
+                    x+=2;
+                    xExtraCounter--;
+                    animation.tick();
 
-                    }else{
-                        x--;
-                    }
-                    break;
-                case LEFT:
-                    handler.getZeldaGameState().cameraOffsetX--;
-                    newMapX--;
-                    if (xExtraCounter>0){
-                        x-=2;
-                        xExtraCounter--;
-                        animation.tick();
+                }else{
+                    x-=4;
+                }
+                break;
+            case LEFT:
+            	if(counter>0) {
+                    handler.getZeldaGameState().cameraOffsetX-=4;
+                    newMapX-=4;
+                    counter--;
+                	}else {
+                		handler.getZeldaGameState().cameraOffsetX+=3;
+                        newMapX+=3;
+                		counter = 1*60;
+                	}
+                if (xExtraCounter>0){
+                    x-=2;
+                    xExtraCounter--;
+                    animation.tick();
 
-                    }else{
-                        x++;
-                    }
-                    break;
+                }else{
+                    x+=4;
+                }
+                break;
                 case UP:
-                    handler.getZeldaGameState().cameraOffsetY--;
-                    newMapY++;
+                	if(counter>0) {
+                    handler.getZeldaGameState().cameraOffsetY-=4;
+                    newMapY+=4;
+                    counter--;
+                	}else {
+                        handler.getZeldaGameState().cameraOffsetY+=3;
+                        newMapY-=3;
+                        counter=1*60;
+                	}
                     if (yExtraCounter>0){
                         y-=2;
                         yExtraCounter--;
