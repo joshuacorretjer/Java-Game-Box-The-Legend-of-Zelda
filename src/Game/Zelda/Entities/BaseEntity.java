@@ -6,6 +6,7 @@ import Resources.Images;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import static Game.GameStates.Zelda.ZeldaGameState.worldScale;
 
@@ -17,6 +18,7 @@ public class BaseEntity {
     public BufferedImage sprite;
     public Rectangle bounds;
     public Handler handler;
+    public boolean remove;
 
     public BaseEntity(int x, int y, BufferedImage sprite, Handler handler) {
         this.x = x;
@@ -41,4 +43,14 @@ public class BaseEntity {
     public void render(Graphics g) {
 
     }
+
+	public void set(int i, ArrayList<BaseEntity> interact) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void add(ArrayList arrayList) {
+		// TODO Auto-generated method stub
+		
+	}
 }

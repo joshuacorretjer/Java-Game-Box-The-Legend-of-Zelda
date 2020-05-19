@@ -25,18 +25,13 @@ public class Enemy extends BaseMovingEntity{
 		// TODO Auto-generated constructor stub
 		
 		Bouncingenemy= new Animation(120, Images.bouncyEnemyFrames);
-		//speed
-		//vidas//
+
 	}
 @Override
 public void tick(){ 
- Random rand = new Random(); 
- int ran= rand.nextInt(4);
- 
-		
-//Switch con el rand. Coge y en cada case pones como si fuese la foto que te //.    mande de link. Que tiene un if con dirección y así //
- 
- switch(ran) {
+ Random rando = new Random(); 
+ int random= rando.nextInt(4);
+ switch(random) {
  case 0:  
 	 if(direction != UP) {
      BufferedImage[] animList = new BufferedImage[2];

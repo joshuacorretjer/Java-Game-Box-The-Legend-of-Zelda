@@ -57,16 +57,25 @@ public class Images {
     public SpriteSheet storySpriteSheet;
     public static BufferedImage zeldaTriforceLogo;
     public static BufferedImage zeldaMap;
+    public static BufferedImage zeldaNPC;//added picturre of npc.
+    
+    public SpriteSheet zeldaNPCSheet;//added sprite sheet for npc.
 
     public static ArrayList<BufferedImage> zeldaTiles;
     public static BufferedImage[] zeldaTitleFrames;
     public static BufferedImage[] zeldaStoryFrames;
+    public static BufferedImage oldman;
+    public static Image flame;
+    public static BufferedImage[] sword;
+    public static BufferedImage[] attack;
+    public static BufferedImage[] heart;
     public static BufferedImage zeldaWorldLayoutTileImage;
     public SpriteSheet zeldaWorldLayoutTileSpriteSheet;
     public static ArrayList<BufferedImage> zeldaWorldLayoutTiles;
 
     public static BufferedImage zeldaLinkImage;
     public SpriteSheet zeldaLinkSpriteSheet;
+    public SpriteSheet zeldaSwordSheet;
     public static BufferedImage[] zeldaLinkFrames;
 
     public static ArrayList<BufferedImage> forestTiles;
@@ -100,6 +109,9 @@ public class Images {
         zeldaTiles = new ArrayList<>();
         zeldaTitleFrames = new BufferedImage[6];
         zeldaStoryFrames = new BufferedImage[8];
+        sword = new BufferedImage[1];
+        heart = new BufferedImage[2];
+        attack = new BufferedImage[15];
         zeldaWorldLayoutTiles = new ArrayList<>();
 
         forestTiles = new ArrayList<>();
@@ -108,6 +120,8 @@ public class Images {
         mountainTiles = new ArrayList<>();
 
         zeldaLinkFrames = new BufferedImage[8];
+        
+//        oldman = new BufferedImage[1];
 
         bouncyEnemyFrames = new BufferedImage[2];
 
@@ -221,6 +235,8 @@ public class Images {
             zeldaMap = createImageTransparent(zeldaMap,"zelddaMap_0,128,0,green",new Color(0,128,0).getRGB());
             zeldaImageSheet = createImageTransparent(zeldaImageSheet,"tileSets_0,120,0,green",new Color(0,128,0).getRGB());
             zeldaSpriteSheet = new SpriteSheet(zeldaImageSheet);
+            zeldaNPC = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/npc.png"));
+            zeldaNPCSheet = new SpriteSheet(zeldaNPC);
 
             storyImageSheet = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/title.png"));
             storySpriteSheet = new SpriteSheet(storyImageSheet);
@@ -243,6 +259,7 @@ public class Images {
             zeldaLinkImage = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/link.png"));
             zeldaLinkImage = createImageTransparent(zeldaLinkImage,"link_0,128,0_green",new Color(0,128,0).getRGB());
             zeldaLinkSpriteSheet = new SpriteSheet(createImageTransparent(zeldaLinkImage,"link_116,116,116_gray",new Color(116,116,116).getRGB()));
+            
             zeldaLinkFrames[0] = zeldaLinkSpriteSheet.crop(1,11,16,16);
             zeldaLinkFrames[1] = zeldaLinkSpriteSheet.crop(18,11,16,16);
             zeldaLinkFrames[2] = zeldaLinkSpriteSheet.crop(35,11,16,16);
@@ -258,7 +275,38 @@ public class Images {
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"forest_brown4greeen",brown.getRGB(),new Color(0,168,0).getRGB()));
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"cave_brown4greeen",brown.getRGB(),new Color(124,8,0).getRGB()));
             zeldaWorldLayoutTiles.add(createImage(zeldaWorldLayoutTiles.get(0),"grave_brown4greeen",brown.getRGB(),new Color(252,252,252).getRGB()));
+            
+            
+            sword[0] = zeldaLinkSpriteSheet.crop(1,154,8,16);
+            
+//            sword[0] = zeldaLinkSpriteSheet.crop(1,156,8,16);
+            //up attack
+            attack[0] = zeldaLinkSpriteSheet.crop(52,106,16,19);
+            attack[1] = zeldaLinkSpriteSheet.crop(35,98,16,27);
+            attack[2] = zeldaLinkSpriteSheet.crop(18,97,16,28);
+            //down attack
+            attack[3] = zeldaLinkSpriteSheet.crop(52,47,16,19);
+            attack[4] = zeldaLinkSpriteSheet.crop(35,47,16,23);
+            attack[5] = zeldaLinkSpriteSheet.crop(18,47,16,27);
+            //right attack
+            attack[6] = zeldaLinkSpriteSheet.crop(70,77,19,16);
+            attack[7] = zeldaLinkSpriteSheet.crop(46,77,23,16);
+            attack[8] = zeldaLinkSpriteSheet.crop(18,77,27,16);
+            //left attack
+            attack[9] = Images.flipHorizontal(attack[6]);
+            attack[10] = Images.flipHorizontal(attack[7]);
+            attack[11] = Images.flipHorizontal(attack[8]);
 
+
+            
+            //hearts
+            heart[0] = storySpriteSheet.crop(330,362,4,8);
+            heart[1] = flipHorizontal(heart[0]);
+            
+            //NPC
+            oldman = zeldaNPCSheet.crop(1,11,16,16);
+            flame = zeldaNPCSheet.crop(52,11,16,16);
+            
 
             EnemyOverwoldImage = ImageIO.read(getClass().getResourceAsStream("/UI/Backgrounds/Zelda/enemy3.png"));
             EnemyOverwoldImage = createImageTransparent(EnemyOverwoldImage,"enemies_overworld_116,116,116_green",new Color(116,116,116).getRGB());
@@ -489,7 +537,7 @@ public class Images {
     public BufferedImage invertImage(BufferedImage bufferedImage, String name) {
         String path = Objects.requireNonNull(getClass().getClassLoader().getResource(".")).getPath();
         String path2 = path.substring(0,path.indexOf("/bin/"))+"/res/Edited/"+name+".png";
-        File imagess = new File(path2.replaceAll("%20"," "));
+        File imagess = new File(path2.replaceAll("%20",""));
         if (imagess.exists()){
             try {
                 return ImageIO.read(imagess.getAbsoluteFile());

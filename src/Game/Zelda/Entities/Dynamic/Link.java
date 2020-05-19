@@ -1,9 +1,11 @@
 package Game.Zelda.Entities.Dynamic;
 
 import Game.GameStates.Zelda.ZeldaGameState;
+import Game.Zelda.Entities.BaseEntity;
 import Game.Zelda.Entities.Statics.DungeonDoor;
 import Game.Zelda.Entities.Statics.SectionDoor;
 import Game.Zelda.Entities.Statics.SolidStaticEntities;
+import Game.Zelda.Entities.Statics.Sword;
 import Main.Handler;
 import Resources.Animation;
 import Resources.Images;
@@ -24,7 +26,17 @@ public class Link extends BaseMovingEntity {
     private final int animSpeed = 120;
     int newMapX=0,newMapY=0,xExtraCounter=0,yExtraCounter=0;
     public boolean movingMap = false;
+    public boolean attackin = false;
     Direction movingTo;
+    Animation UpAttackAnim;
+    Animation DownAttackAnim;
+    Animation LeftAttackAnim;
+    Animation RightAttackAnim;
+    public int xcounter = 1*60;
+    public int ycounter = 1*30;
+    public int newWidth = 0;
+    public boolean flag = false;
+    public boolean exp = false;
 
 
     public Link(int x, int y, BufferedImage[] sprite, Handler handler) {
@@ -36,36 +48,89 @@ public class Link extends BaseMovingEntity {
         animList[1] = sprite[5];
 
         animation = new Animation(animSpeed,animList);
+        
+        BufferedImage[] upattack = new BufferedImage[5];
+        upattack[0] = Images.attack[0];
+        upattack[1] = Images.attack[1];
+        upattack[2] = Images.attack[2];
+        upattack[3] = Images.attack[1];
+        upattack[4] = Images.attack[0];
+        
+        UpAttackAnim = new Animation(70,upattack);
+        
+        BufferedImage[] downattack = new BufferedImage[5];
+        downattack[0] = Images.attack[3];
+        downattack[1] = Images.attack[4];
+        downattack[2] = Images.attack[5];
+        downattack[3] = Images.attack[4];
+        downattack[4] = Images.attack[3];
+        
+        DownAttackAnim = new Animation(70,downattack);
+        
+        BufferedImage[] leftattack = new BufferedImage[5];
+        leftattack[0] = Images.attack[6];
+        leftattack[1] = Images.attack[7];
+        leftattack[2] = Images.attack[8];
+        leftattack[3] = Images.attack[7];
+        leftattack[4] = Images.attack[6];
+        
+        LeftAttackAnim = new Animation(70,leftattack);
+        
+        BufferedImage[] rightattack = new BufferedImage[5];
+        rightattack[0] = Images.attack[6];
+        rightattack[1] = Images.attack[7];
+        rightattack[2] = Images.attack[8];
+        rightattack[3] = Images.attack[7];
+        rightattack[4] = Images.attack[6];
+        
+        RightAttackAnim = new Animation(70,rightattack);
+        
+        
+        
     }
 
     @Override
     public void tick() {
         if (movingMap){
             switch (movingTo) {
-                case RIGHT:
-                    handler.getZeldaGameState().cameraOffsetX++;
-                    newMapX++;
-                    if (xExtraCounter>0){
-                        x+=2;
-                        xExtraCounter--;
-                        animation.tick();
+            case RIGHT:
+            	if(xcounter>0) {
+                    handler.getZeldaGameState().cameraOffsetX+=4;
+                    newMapX+=4;
+                    xcounter--;
+                	}else {
+                		handler.getZeldaGameState().cameraOffsetX-=3;
+                        newMapX-=3;
+                		xcounter = 1*60;
+                	}
+                if (xExtraCounter>0){
+                    x+=2;
+                    xExtraCounter--;
+                    animation.tick();
 
-                    }else{
-                        x--;
-                    }
-                    break;
-                case LEFT:
-                    handler.getZeldaGameState().cameraOffsetX--;
-                    newMapX--;
-                    if (xExtraCounter>0){
-                        x-=2;
-                        xExtraCounter--;
-                        animation.tick();
+                }else{
+                    x-=4;
+                }
+                break;
+            case LEFT:
+            	if(xcounter>0) {
+                    handler.getZeldaGameState().cameraOffsetX-=4;
+                    newMapX-=4;
+                    xcounter--;
+                	}else {
+                		handler.getZeldaGameState().cameraOffsetX+=3;
+                        newMapX+=3;
+                		xcounter = 1*60;
+                	}
+                if (xExtraCounter>0){
+                    x-=2;
+                    xExtraCounter--;
+                    animation.tick();
 
-                    }else{
-                        x++;
-                    }
-                    break;
+                }else{
+                    x+=4;
+                }
+                break;
                 case UP:
                     handler.getZeldaGameState().cameraOffsetY--;
                     newMapY++;
@@ -73,7 +138,6 @@ public class Link extends BaseMovingEntity {
                         y-=2;
                         yExtraCounter--;
                         animation.tick();
-
                     }else{
                         y++;
                     }
@@ -144,22 +208,106 @@ public class Link extends BaseMovingEntity {
                 }
                 animation.tick();
                 move(direction);
-            } else {
+            }
+            
+            else {
                 moving = false;
             }
         }
+     if(handler.getKeyManager().enter && handler.getZeldaGameState().haveSword) {
+    	 attackin = true;
+     }
+     if(attackin) {
+    	 switch(direction) {
+    	 case UP:
+    		 UpAttackAnim.tick();
+        	 if(UpAttackAnim.end) {
+        		 attackin=false;
+        		 UpAttackAnim.reset();
+        		 }
+        	 break;
+    	 case DOWN:
+    		 DownAttackAnim.tick();
+        	 if(DownAttackAnim.end) {
+        		 attackin=false;
+        		 DownAttackAnim.reset();
+        		 }
+        	 break;
+    	 case LEFT:
+    		 LeftAttackAnim.tick();
+        	 if(LeftAttackAnim.end) {
+        		 attackin=false;
+        		 LeftAttackAnim.reset();
+        		 }
+        	 break;
+    	 case RIGHT:
+    		 RightAttackAnim.tick();
+        	 if(RightAttackAnim.end) {
+        		 attackin=false;
+        		 RightAttackAnim.reset();
+        		 }
+        	 break;
+    	 }
+     }
+     
+     
     }
 
     @Override
     public void render(Graphics g) {
         if (moving) {
             g.drawImage(animation.getCurrentFrame(),x , y, width , height  , null);
-
         } else {
             if (movingMap){
                 g.drawImage(animation.getCurrentFrame(),x , y, width, height  , null);
             }
-            g.drawImage(sprite, x , y, width , height , null);
+            if(attackin==true) {
+            	if(direction == Direction.UP) {
+            		if(UpAttackAnim.getCurrentFrame()==Images.attack[0]){
+            		g.drawImage(UpAttackAnim.getCurrentFrame(), x, y, width, height+2, null);
+            		}
+            		if(UpAttackAnim.getCurrentFrame()==Images.attack[1]){
+            		g.drawImage(UpAttackAnim.getCurrentFrame(), x, y, width, height+10, null);
+            		}
+            		if(UpAttackAnim.getCurrentFrame()==Images.attack[2]){
+            		g.drawImage(UpAttackAnim.getCurrentFrame(), x, y, width, height+20, null);
+            		}
+            	}else if(direction == Direction.DOWN) {
+            		if(DownAttackAnim.getCurrentFrame()==Images.attack[3]){
+            		g.drawImage(DownAttackAnim.getCurrentFrame(), x, y, width, height+2, null);
+            		}
+            		if(DownAttackAnim.getCurrentFrame()==Images.attack[4]){
+            		g.drawImage(DownAttackAnim.getCurrentFrame(), x, y, width, height+10, null);
+            		}
+            		if(DownAttackAnim.getCurrentFrame()==Images.attack[5]){
+            		g.drawImage(DownAttackAnim.getCurrentFrame(), x, y, width, height+20, null);
+            		}
+            	}else if(direction == Direction.LEFT) {
+            		if(LeftAttackAnim.getCurrentFrame()==Images.attack[6]){
+            		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+2), height , null);
+            		}
+            		if(LeftAttackAnim.getCurrentFrame()==Images.attack[7]){
+            		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+10), height , null);
+            		}
+            		if(LeftAttackAnim.getCurrentFrame()==Images.attack[8]){
+            		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+20), height , null);
+            		}
+            	}else if(direction == Direction.RIGHT) {
+            		if(RightAttackAnim.getCurrentFrame()==Images.attack[6]){
+            		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+2, height, null);
+            		}
+            		if(RightAttackAnim.getCurrentFrame()==Images.attack[7]){
+            		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+10, height, null);
+            		}
+            		if(RightAttackAnim.getCurrentFrame()==Images.attack[8]){
+            		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+20, height, null);
+            		}
+            	}
+        		
+            }else {
+            	g.drawImage(sprite, x , y, width , height , null);
+            }
+            
         }
     }
 
@@ -167,7 +315,7 @@ public class Link extends BaseMovingEntity {
     public void move(Direction direction) {
         moving = true;
         changeIntersectingBounds();
-        //chack for collisions
+        //check for collisions
         if (ZeldaGameState.inCave){
             for (SolidStaticEntities objects : handler.getZeldaGameState().caveObjects) {
                 if ((objects instanceof DungeonDoor) && objects.bounds.intersects(bounds) && direction == ((DungeonDoor) objects).direction) {
@@ -182,8 +330,13 @@ public class Link extends BaseMovingEntity {
                     return;
                 }
             }
+            for(BaseEntity swoRD : handler.getZeldaGameState().interactable) {
+            	if(swoRD.bounds.intersects(bounds)) {
+            		ZeldaGameState.haveSword = true;
+            	}
+        	}
         }
-        else {
+        else{
             for (SolidStaticEntities objects : handler.getZeldaGameState().objects.get(handler.getZeldaGameState().mapX).get(handler.getZeldaGameState().mapY)) {
                 if ((objects instanceof SectionDoor) && objects.bounds.intersects(bounds) && direction == ((SectionDoor) objects).direction) {
                     if (!(objects instanceof DungeonDoor)) {
@@ -231,6 +384,7 @@ public class Link extends BaseMovingEntity {
                     return;
                 }
             }
+
         }
         switch (direction) {
             case RIGHT:

@@ -7,6 +7,7 @@ import Game.GameStates.Zelda.ZeldaIntroStates;
 import Game.GameStates.Zelda.ZeldaMapMakerState;
 import Game.PacMan.World.Map;
 import Game.PacMan.entities.Dynamics.PacMan;
+import Game.Zelda.Entities.Statics.Sword;
 import Input.KeyManager;
 import Input.MouseManager;
 import Resources.MusicHandler;
@@ -33,6 +34,7 @@ public class Handler {
     public static boolean DEBUG = true;
     private Map map;
     private PacMan pacman;
+	private Sword sword;
 
     public Handler(GameSetUp game){
         this.game = game;
@@ -105,6 +107,14 @@ public class Handler {
 
     public State getState(){
         return State.getState();
+    }
+    
+    public Sword setSword (Sword sword) {
+    	return this.sword = sword;
+    }
+    
+    public Sword getSword() {
+    	return sword;
     }
 
     public ScoreManager getScoreManager() {
