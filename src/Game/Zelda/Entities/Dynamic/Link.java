@@ -26,14 +26,14 @@ public class Link extends BaseMovingEntity {
     private final int animSpeed = 120;
     int newMapX=0,newMapY=0,xExtraCounter=0,yExtraCounter=0;
     public boolean movingMap = false;
-    public boolean attacki = false;
+    public boolean attackin = false;
     Direction movingTo;
     Animation UpAttackAnim;
     Animation DownAttackAnim;
     Animation LeftAttackAnim;
     Animation RightAttackAnim;
-    public int counter = 1*60;
-    public double count=0.0;
+    public int xcounter = 1*60;
+    public int ycounter = 1*30;
     public int newWidth = 0;
     public boolean flag = false;
     public boolean exp = false;
@@ -94,14 +94,14 @@ public class Link extends BaseMovingEntity {
         if (movingMap){
             switch (movingTo) {
             case RIGHT:
-            	if(counter>0) {
+            	if(xcounter>0) {
                     handler.getZeldaGameState().cameraOffsetX+=4;
                     newMapX+=4;
-                    counter--;
+                    xcounter--;
                 	}else {
                 		handler.getZeldaGameState().cameraOffsetX-=3;
                         newMapX-=3;
-                		counter = 1*60;
+                		xcounter = 1*60;
                 	}
                 if (xExtraCounter>0){
                     x+=2;
@@ -113,14 +113,14 @@ public class Link extends BaseMovingEntity {
                 }
                 break;
             case LEFT:
-            	if(counter>0) {
+            	if(xcounter>0) {
                     handler.getZeldaGameState().cameraOffsetX-=4;
                     newMapX-=4;
-                    counter--;
+                    xcounter--;
                 	}else {
                 		handler.getZeldaGameState().cameraOffsetX+=3;
                         newMapX+=3;
-                		counter = 1*60;
+                		xcounter = 1*60;
                 	}
                 if (xExtraCounter>0){
                     x-=2;
@@ -132,14 +132,14 @@ public class Link extends BaseMovingEntity {
                 }
                 break;
                 case UP:
-                	if(counter>0) {
+                	if(ycounter>0) {
                     handler.getZeldaGameState().cameraOffsetY-=4;
                     newMapY+=4;
-                    counter--;
-                	}else {
+                    ycounter--;
+                	}else if(ycounter <= 0){
                         handler.getZeldaGameState().cameraOffsetY+=3;
                         newMapY-=3;
-                        counter=1*60;
+                        ycounter=1*30;
                 	}
                     if (yExtraCounter>0){
                         y-=2;
@@ -147,7 +147,7 @@ public class Link extends BaseMovingEntity {
                         animation.tick();
 
                     }else{
-                        y++;
+                        y+=4;
                     }
                     break;
                 case DOWN:
@@ -223,35 +223,35 @@ public class Link extends BaseMovingEntity {
             }
         }
      if(handler.getKeyManager().enter) {
-    	 attacki = true;
+    	 attackin = true;
      }
-     if(attacki) {
+     if(attackin) {
     	 switch(direction) {
     	 case UP:
     		 UpAttackAnim.tick();
         	 if(UpAttackAnim.end) {
-        		 attacki=false;
+        		 attackin=false;
         		 UpAttackAnim.reset();
         		 }
         	 break;
     	 case DOWN:
     		 DownAttackAnim.tick();
         	 if(DownAttackAnim.end) {
-        		 attacki=false;
+        		 attackin=false;
         		 DownAttackAnim.reset();
         		 }
         	 break;
     	 case LEFT:
     		 LeftAttackAnim.tick();
         	 if(LeftAttackAnim.end) {
-        		 attacki=false;
+        		 attackin=false;
         		 LeftAttackAnim.reset();
         		 }
         	 break;
     	 case RIGHT:
     		 RightAttackAnim.tick();
         	 if(RightAttackAnim.end) {
-        		 attacki=false;
+        		 attackin=false;
         		 RightAttackAnim.reset();
         		 }
         	 break;
@@ -272,7 +272,7 @@ public class Link extends BaseMovingEntity {
             if (movingMap){
                 g.drawImage(animation.getCurrentFrame(),x , y, width, height  , null);
             }
-            if(attacki==true) {
+            if(attackin==true) {
             	if(direction == Direction.UP) {
             		if(UpAttackAnim.getCurrentFrame()==Images.attack[0]){
             		g.drawImage(UpAttackAnim.getCurrentFrame(), x, y, width, height+2, null);
@@ -293,9 +293,7 @@ public class Link extends BaseMovingEntity {
             		if(DownAttackAnim.getCurrentFrame()==Images.attack[5]){
             		g.drawImage(DownAttackAnim.getCurrentFrame(), x, y, width, height+20, null);
             		}
-//            		g.drawImage(DownAttackAnim.getCurrentFrame(),x , y,width , (int) (height+count) , null);
             	}else if(direction == Direction.LEFT) {
-            		
             		if(LeftAttackAnim.getCurrentFrame()==Images.attack[6]){
             		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+2), height , null);
             		}
@@ -305,7 +303,6 @@ public class Link extends BaseMovingEntity {
             		if(LeftAttackAnim.getCurrentFrame()==Images.attack[8]){
             		g.drawImage(LeftAttackAnim.getCurrentFrame(), x+width, y, -(width+20), height , null);
             		}
-//            		g.drawImage(LeftAttackAnim.getCurrentFrame(),x , y,width, height , null);
             	}else if(direction == Direction.RIGHT) {
             		if(RightAttackAnim.getCurrentFrame()==Images.attack[6]){
             		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+2, height, null);
@@ -316,7 +313,6 @@ public class Link extends BaseMovingEntity {
             		if(RightAttackAnim.getCurrentFrame()==Images.attack[8]){
             		g.drawImage(RightAttackAnim.getCurrentFrame(), x, y, width+20, height, null);
             		}
-//            		g.drawImage(RightAttackAnim.getCurrentFrame(),x , y,(int) (width+count) , height , null);
             	}
         		
             }else {
